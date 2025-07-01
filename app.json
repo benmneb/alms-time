@@ -24,6 +24,14 @@
     },
     "web": {
       "favicon": "./assets/favicon-96x96.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location to automatically give you accurate times."
+        }
+      ]
+    ]
   }
 }
