@@ -43,8 +43,12 @@ export default function Times() {
         // Request location permission
         const { status } = await Location.requestForegroundPermissionsAsync()
         if (status !== 'granted') {
-          // TODO: web alerts component
-          Alert.alert('Permission Denied', 'Location permission is required.')
+          if (Platform.OS === 'web') {
+            // TODO: web alerts component
+            alert('Location permission is required.')
+          } else {
+            Alert.alert('Location permission is required.')
+          }
           setLoading(false)
           return
         }
@@ -63,6 +67,8 @@ export default function Times() {
             setAddress(geo)
           } else {
             console.error('No location coords')
+            // TODO: web alerts component
+            alert('No location coords')
           }
         } else {
           const geo = await Location.reverseGeocodeAsync(loc.coords)
@@ -81,8 +87,14 @@ export default function Times() {
         setSunTimes(times)
       } catch (error) {
         console.error('Error fetching location or sun data:', error)
-        // TODO: web alert component
-        Alert.alert('Error', 'Could not retrieve sun or location data.')
+        if (Platform.OS === 'web') {
+          // TODO: web alerts component
+          alert(
+            `Error fetching location or sun data: ${JSON.stringify(error, null, 2)}`
+          )
+        } else {
+          Alert.alert('Error', 'Could not retrieve sun or location data.')
+        }
       } finally {
         setLoading(false)
       }
