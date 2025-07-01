@@ -32,6 +32,9 @@
           "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location to automatically give you accurate times."
         }
       ]
-    ]
+    ],
+    "experiments": {
+      "baseUrl": "/alms-time"
+    }
   }
 }
