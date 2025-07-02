@@ -114,10 +114,10 @@ export default function Times() {
         Solar Noon: {sunTimes.solarNoon.toLocaleTimeString()}
       </Text>
       <Text>
-        📍 Location:{' '}
+        📍{' '}
         {(address && 'display_name' in address
           ? address?.display_name
-          : address?.city || address?.region) || 'Unknown'}
+          : address?.city || address?.region) || 'Unknown location'}
       </Text>
     </View>
   )
