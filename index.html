@@ -7,7 +7,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <link rel="manifest" href="/manifest.json" />
+    <link rel="manifest" href="alms-time/manifest.json" />
     <title>alms-time</title>
     <!-- The `react-native-web` recommended style reset: https://necolas.github.io/react-native-web/docs/setup/#root-element -->
     <style id="expo-reset">
@@ -31,7 +31,7 @@
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
           navigator.serviceWorker
-            .register('/sw.js')
+            .register('/alms-time/sw.js')
             .then((registration) => {
               console.log(
                 'Service Worker registered with scope:',
