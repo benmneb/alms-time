@@ -14,7 +14,7 @@ export default function NoLocation({ refetch }: Props) {
             style={{ cursor: 'help' }}
             title="Your location is required to provide accurate dawn rise and solar noon times. Most browsers do not allow geolocation requests without user interaction."
           >
-            Location is required
+            Location permission is required
           </span>
         </Text>
         <Button

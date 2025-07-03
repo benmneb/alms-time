@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { Platform, Alert } from 'react-native'
+import { Platform } from 'react-native'
 import * as Location from 'expo-location'
 import SunCalc, { GetTimesResult } from 'suncalc'
 
@@ -54,10 +54,7 @@ export function useSunTimes() {
 
     async function getNativeLocation() {
       const { status } = await Location.requestForegroundPermissionsAsync()
-      if (status !== 'granted') {
-        Alert.alert('Location permission is required.')
-        return null
-      }
+      if (status !== 'granted') return null
       const loc = await Location.getCurrentPositionAsync({})
       return loc.coords
     }
@@ -71,7 +68,6 @@ export function useSunTimes() {
           navigator.geolocation.getCurrentPosition(
             (pos) => resolve(pos.coords),
             () => {
-              alert('Location permission is required.')
               resolve(null)
             },
             {
@@ -122,13 +118,7 @@ export function useSunTimes() {
       const times = SunCalc.getTimes(now, coords.latitude, coords.longitude)
       if (!cancelled) setSunTimes(times)
     } catch (error) {
-      if (Platform.OS === 'web') {
-        alert(
-          `Error fetching location or sun data: ${JSON.stringify(error, null, 2)}`
-        )
-      } else {
-        Alert.alert('Error', 'Could not retrieve sun or location data.')
-      }
+      console.error('Could not retrieve sun or location data:', error)
     } finally {
       if (!cancelled) setLoading(false)
     }
