@@ -4,7 +4,7 @@ import Times from './components/Times'
 
 export default function App() {
   return (
-    <View style={styles.container}>
+    <View style={styles.root}>
       <Times />
       <StatusBar style="auto" />
     </View>
@@ -12,9 +12,9 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  root: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#faf6e8',
     alignItems: 'center',
     justifyContent: 'center',
   },
