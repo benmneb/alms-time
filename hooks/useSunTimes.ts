@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Platform, Alert } from 'react-native'
 import * as Location from 'expo-location'
 import SunCalc, { GetTimesResult } from 'suncalc'
@@ -45,10 +45,12 @@ export function useSunTimes() {
     useState<Location.LocationObjectCoords | null>(null)
   const [address, setAddress] = useState<ReverseGeocodeReturnType | null>(null)
   const [sunTimes, setSunTimes] = useState<GetTimesResult | null>(null)
-  const [loading, setLoading] = useState<boolean>(true)
+  const [loading, setLoading] = useState<boolean>(Platform.OS !== 'web')
 
-  useEffect(() => {
+  const fetchLocationAndSunTimes = useCallback(async () => {
     let cancelled = false
+    setLoading(true)
+    let coords: Location.LocationObjectCoords | null = null
 
     async function getNativeLocation() {
       const { status } = await Location.requestForegroundPermissionsAsync()
@@ -82,63 +84,63 @@ export function useSunTimes() {
       })
     }
 
-    ;(async () => {
-      setLoading(true)
-      let coords: Location.LocationObjectCoords | null = null
-
-      try {
-        if (Platform.OS === 'web') {
-          const webCoords = await getWebLocation()
-          if (webCoords) {
-            coords = {
-              latitude: webCoords.latitude,
-              longitude: webCoords.longitude,
-              altitude: webCoords.altitude ?? 0,
-              accuracy: webCoords.accuracy ?? 0,
-              altitudeAccuracy: webCoords.altitudeAccuracy ?? null,
-              heading: webCoords.heading ?? null,
-              speed: webCoords.speed ?? null,
-            }
+    try {
+      if (Platform.OS === 'web') {
+        const webCoords = await getWebLocation()
+        if (webCoords) {
+          coords = {
+            latitude: webCoords.latitude,
+            longitude: webCoords.longitude,
+            altitude: webCoords.altitude ?? 0,
+            accuracy: webCoords.accuracy ?? 0,
+            altitudeAccuracy: webCoords.altitudeAccuracy ?? null,
+            heading: webCoords.heading ?? null,
+            speed: webCoords.speed ?? null,
           }
-        } else {
-          coords = await getNativeLocation()
         }
-
-        if (!coords || cancelled) return
-        setLocation(coords)
-
-        // Get human-readable address
-        if (Platform.OS === 'web') {
-          const geo = await reverseWebGeocodeAsync(
-            coords.latitude,
-            coords.longitude
-          )
-          if (!cancelled) setAddress(geo)
-        } else {
-          const geo = await Location.reverseGeocodeAsync(coords)
-          if (!cancelled) setAddress(geo.length > 0 ? geo[0] : null)
-        }
-
-        // Calculate sun times
-        const now = new Date()
-        const times = SunCalc.getTimes(now, coords.latitude, coords.longitude)
-        if (!cancelled) setSunTimes(times)
-      } catch (error) {
-        if (Platform.OS === 'web') {
-          alert(
-            `Error fetching location or sun data: ${JSON.stringify(error, null, 2)}`
-          )
-        } else {
-          Alert.alert('Error', 'Could not retrieve sun or location data.')
-        }
-      } finally {
-        if (!cancelled) setLoading(false)
+      } else {
+        coords = await getNativeLocation()
       }
-    })()
+
+      if (!coords || cancelled) return
+      setLocation(coords)
+
+      // Get human-readable address
+      if (Platform.OS === 'web') {
+        const geo = await reverseWebGeocodeAsync(
+          coords.latitude,
+          coords.longitude
+        )
+        if (!cancelled) setAddress(geo)
+      } else {
+        const geo = await Location.reverseGeocodeAsync(coords)
+        if (!cancelled) setAddress(geo.length > 0 ? geo[0] : null)
+      }
+
+      // Calculate sun times
+      const now = new Date()
+      const times = SunCalc.getTimes(now, coords.latitude, coords.longitude)
+      if (!cancelled) setSunTimes(times)
+    } catch (error) {
+      if (Platform.OS === 'web') {
+        alert(
+          `Error fetching location or sun data: ${JSON.stringify(error, null, 2)}`
+        )
+      } else {
+        Alert.alert('Error', 'Could not retrieve sun or location data.')
+      }
+    } finally {
+      if (!cancelled) setLoading(false)
+    }
 
     return () => {
       cancelled = true
     }
+  }, [])
+
+  useEffect(() => {
+    if (Platform.OS === 'web') return
+    fetchLocationAndSunTimes()
   }, [])
 
   return {
@@ -147,5 +149,6 @@ export function useSunTimes() {
     sunTimes,
     address,
     addressString: formatAddress(address),
+    refetch: fetchLocationAndSunTimes,
   }
 }

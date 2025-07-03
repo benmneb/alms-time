@@ -29,6 +29,9 @@ importers:
       react-native:
         specifier: 0.79.4
         version: 0.79.4(@babel/core@7.27.7)(@types/react@19.0.14)(react@19.0.0)
+      react-native-reanimated:
+        specifier: ~3.17.5
+        version: 3.17.5(@babel/core@7.27.7)(react-native@0.79.4(@babel/core@7.27.7)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
       react-native-web:
         specifier: ^0.20.0
         version: 0.20.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -3105,6 +3108,13 @@ packages:
   react-native-is-edge-to-edge@1.1.7:
     resolution: {integrity: sha512-EH6i7E8epJGIcu7KpfXYXiV2JFIYITtq+rVS8uEb+92naMRBdxhTuS8Wn2Q7j9sqyO0B+Xbaaf9VdipIAmGW4w==}
     peerDependencies:
+      react: '*'
+      react-native: '*'
+
+  react-native-reanimated@3.17.5:
+    resolution: {integrity: sha512-SxBK7wQfJ4UoWoJqQnmIC7ZjuNgVb9rcY5Xc67upXAFKftWg0rnkknTw6vgwnjRcvYThrjzUVti66XoZdDJGtw==}
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
       react: '*'
       react-native: '*'
 
@@ -7706,6 +7716,26 @@ snapshots:
     dependencies:
       react: 19.0.0
       react-native: 0.79.4(@babel/core@7.27.7)(@types/react@19.0.14)(react@19.0.0)
+
+  react-native-reanimated@3.17.5(@babel/core@7.27.7)(react-native@0.79.4(@babel/core@7.27.7)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0):
+    dependencies:
+      '@babel/core': 7.27.7
+      '@babel/plugin-transform-arrow-functions': 7.27.1(@babel/core@7.27.7)
+      '@babel/plugin-transform-class-properties': 7.27.1(@babel/core@7.27.7)
+      '@babel/plugin-transform-classes': 7.27.7(@babel/core@7.27.7)
+      '@babel/plugin-transform-nullish-coalescing-operator': 7.27.1(@babel/core@7.27.7)
+      '@babel/plugin-transform-optional-chaining': 7.27.1(@babel/core@7.27.7)
+      '@babel/plugin-transform-shorthand-properties': 7.27.1(@babel/core@7.27.7)
+      '@babel/plugin-transform-template-literals': 7.27.1(@babel/core@7.27.7)
+      '@babel/plugin-transform-unicode-regex': 7.27.1(@babel/core@7.27.7)
+      '@babel/preset-typescript': 7.27.1(@babel/core@7.27.7)
+      convert-source-map: 2.0.0
+      invariant: 2.2.4
+      react: 19.0.0
+      react-native: 0.79.4(@babel/core@7.27.7)(@types/react@19.0.14)(react@19.0.0)
+      react-native-is-edge-to-edge: 1.1.7(react-native@0.79.4(@babel/core@7.27.7)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
+    transitivePeerDependencies:
+      - supports-color
 
   react-native-web@0.20.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:

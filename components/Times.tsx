@@ -1,14 +1,16 @@
 import React from 'react'
 import { View, Text, ActivityIndicator, StyleSheet } from 'react-native'
+import NoLocation from './NoLocation'
+import NoSunTimes from './NoSunTimes'
 import { useSunTimes } from '../hooks/useSunTimes'
 
 export default function Times() {
-  const { loading, location, sunTimes, addressString } = useSunTimes()
+  const { loading, location, sunTimes, addressString, refetch } = useSunTimes()
 
   if (loading) return <ActivityIndicator size="large" style={styles.loading} />
 
-  if (!location) return <Text>Could not get location.</Text>
-  if (!sunTimes) return <Text>Could not calculate sun times.</Text>
+  if (!location) return <NoLocation refetch={refetch} />
+  if (!sunTimes) return <NoSunTimes refetch={refetch} />
 
   return (
     <View style={styles.container}>
