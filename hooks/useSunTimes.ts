@@ -60,15 +60,18 @@ export function useSunTimes() {
     }
 
     function getWebLocation(): Promise<GeolocationCoordinates | null> {
-      return new Promise((resolve) => {
+      return new Promise((resolve, reject) => {
         if (!navigator.geolocation) {
           alert('Geolocation is not supported by your browser.')
-          resolve(null)
+          reject('Geolocation is not supported by the browser.')
         } else {
           navigator.geolocation.getCurrentPosition(
-            (pos) => resolve(pos.coords),
-            () => {
-              resolve(null)
+            (position) => {
+              resolve(position.coords)
+            },
+            (error) => {
+              console.error(error)
+              reject(error.message)
             },
             {
               enableHighAccuracy: true,
@@ -109,8 +112,12 @@ export function useSunTimes() {
         )
         if (!cancelled) setAddress(geo)
       } else {
-        const geo = await Location.reverseGeocodeAsync(coords)
-        if (!cancelled) setAddress(geo.length > 0 ? geo[0] : null)
+        try {
+          const geo = await Location.reverseGeocodeAsync(coords)
+          if (!cancelled) setAddress(geo.length > 0 ? geo[0] : null)
+        } catch (error) {
+          console.error(error)
+        }
       }
 
       // Calculate sun times
@@ -118,7 +125,7 @@ export function useSunTimes() {
       const times = SunCalc.getTimes(now, coords.latitude, coords.longitude)
       if (!cancelled) setSunTimes(times)
     } catch (error) {
-      console.error('Could not retrieve sun or location data:', error)
+      console.error('Getting sunTimes:', error)
     } finally {
       if (!cancelled) setLoading(false)
     }
