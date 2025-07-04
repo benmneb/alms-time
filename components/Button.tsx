@@ -4,13 +4,19 @@ import Animated from 'react-native-reanimated'
 
 interface Props {
   title: string
-  onPress: () => void
+  onPress?: () => void
   style?: StyleProp<ViewStyle>
+  variant?: 'solid' | 'outline'
 }
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable)
 
-export default function Button({ title, onPress, style }: Props) {
+export default function Button({
+  title,
+  onPress,
+  style,
+  variant = 'solid',
+}: Props) {
   const { animatedStyle, onPressIn, onPressOut } = usePressScale()
 
   return (
@@ -18,22 +24,35 @@ export default function Button({ title, onPress, style }: Props) {
       onPressIn={onPressIn}
       onPressOut={onPressOut}
       onPress={onPress}
-      style={[animatedStyle, styles.button, style]}
+      style={[animatedStyle, styles[variant], style]}
     >
-      <Text style={styles.buttonText}>{title}</Text>
+      <Text style={styles[`${variant}-title`]}>{title}</Text>
     </AnimatedPressable>
   )
 }
 
 const styles = StyleSheet.create({
-  button: {
+  solid: {
     backgroundColor: '#007AFF',
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 8,
   },
-  buttonText: {
+  outline: {
+    borderWidth: 2,
+    borderColor: '#007AFF',
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+  },
+  ['solid-title']: {
     color: '#FFFFFF', // TODO
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  ['outline-title']: {
+    color: '#007AFF',
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',
