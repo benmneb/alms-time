@@ -3,8 +3,8 @@ import { persist, createJSONStorage } from 'zustand/middleware'
 import { getPersistentStorage } from '../helpers/getPersistentStorage'
 
 export interface SettingsType {
-  dawnTime: 'astro' | 'nautical' | 'civil'
-  setDawnTime: (dawnTime: SettingsType['dawnTime']) => void
+  dawnType: 'astro' | 'nautical' | 'civil'
+  setDawnType: (dawnType: SettingsType['dawnType']) => void
   timeFormat: 'absolute' | 'relative'
   setTimeFormat: (timeFormat: SettingsType['timeFormat']) => void
   locationFormat: 'address' | 'coords'
@@ -14,8 +14,8 @@ export interface SettingsType {
 export const useSettingsStore = create<SettingsType>()(
   persist(
     (set, get) => ({
-      dawnTime: 'nautical', // TODO: rename
-      setDawnTime: (dawnTime) => set({ dawnTime }),
+      dawnType: 'nautical',
+      setDawnType: (dawnType) => set({ dawnType }),
       timeFormat: 'absolute',
       setTimeFormat: (timeFormat) => set({ timeFormat }),
       locationFormat: 'address',

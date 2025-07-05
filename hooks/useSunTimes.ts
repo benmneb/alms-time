@@ -10,7 +10,7 @@ import {
 
 export function useSunTimes() {
   const setLoading = useLocationStore((s) => s.setLoading)
-  const setLocation = useLocationStore((s) => s.setLocation)
+  const setCoords = useLocationStore((s) => s.setCoords)
   const setAddress = useLocationStore((s) => s.setAddress)
   const setSunTimes = useTimesStore((s) => s.setSunTimes)
 
@@ -69,7 +69,7 @@ export function useSunTimes() {
       }
 
       if (!coords || cancelled) return
-      setLocation(coords)
+      setCoords(coords)
 
       // Get human-readable address
       if (Platform.OS === 'web') {

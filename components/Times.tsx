@@ -10,7 +10,7 @@ import { useRelativeTime } from '../hooks/useRelativeTime'
 import { SettingsType } from '../store/settings'
 
 const toSunCalcTypes: Partial<
-  Record<SettingsType['dawnTime'], keyof GetTimesResult>
+  Record<SettingsType['dawnType'], keyof GetTimesResult>
 > = {
   astro: 'nightEnd',
   nautical: 'nauticalDawn',
@@ -20,14 +20,14 @@ const toSunCalcTypes: Partial<
 export default function Times() {
   const { refetch } = useSunTimes()
   const loading = useLocationStore((s) => s.loading)
-  const location = useLocationStore((s) => s.location)
+  const location = useLocationStore((s) => s.coords)
   const addressString = useLocationStore((s) => s.addressString)
   const sunTimes = useTimesStore((s) => s.sunTimes)
-  const dawnTime = useSettingsStore((s) => s.dawnTime)
+  const dawnType = useSettingsStore((s) => s.dawnType)
   const timeFormat = useSettingsStore((s) => s.timeFormat)
   const setTimeFormat = useSettingsStore((s) => s.setTimeFormat)
 
-  const sunCalcKey = toSunCalcTypes?.[dawnTime]
+  const sunCalcKey = toSunCalcTypes?.[dawnType]
   const dawnRelative = useRelativeTime(sunTimes?.[sunCalcKey!])
   const noonRelative = useRelativeTime(sunTimes?.solarNoon)
 

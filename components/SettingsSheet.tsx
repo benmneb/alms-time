@@ -15,8 +15,8 @@ interface Props {
 }
 
 export default function SettingsSheet({ ref }: Props) {
-  const dawnTime = useSettingsStore((s) => s.dawnTime)
-  const setDawnTime = useSettingsStore((s) => s.setDawnTime)
+  const dawnType = useSettingsStore((s) => s.dawnType)
+  const setDawnType = useSettingsStore((s) => s.setDawnType)
   const timeFormat = useSettingsStore((s) => s.timeFormat)
   const setTimeFormat = useSettingsStore((s) => s.setTimeFormat)
 
@@ -46,21 +46,21 @@ export default function SettingsSheet({ ref }: Props) {
           <View style={styles.buttonContainer}>
             <Button
               style={styles.button}
-              variant={dawnTime === 'astro' ? 'solid' : 'outline'}
+              variant={dawnType === 'astro' ? 'solid' : 'outline'}
               title="Astronomical"
-              onPress={() => setDawnTime('astro')}
+              onPress={() => setDawnType('astro')}
             />
             <Button
               style={styles.button}
-              variant={dawnTime === 'nautical' ? 'solid' : 'outline'}
+              variant={dawnType === 'nautical' ? 'solid' : 'outline'}
               title="Nautical"
-              onPress={() => setDawnTime('nautical')}
+              onPress={() => setDawnType('nautical')}
             />
             <Button
               style={styles.button}
-              variant={dawnTime === 'civil' ? 'solid' : 'outline'}
+              variant={dawnType === 'civil' ? 'solid' : 'outline'}
               title="Civil"
-              onPress={() => setDawnTime('civil')}
+              onPress={() => setDawnType('civil')}
             />
           </View>
           <View style={[styles.headingContainer, { marginTop: 20 }]}>

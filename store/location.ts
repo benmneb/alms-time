@@ -9,8 +9,8 @@ import {
 export interface LocationType {
   loading: boolean | null
   setLoading: (loading: LocationType['loading']) => void
-  location: Location.LocationObjectCoords | null
-  setLocation: (location: LocationType['location']) => void
+  coords: Location.LocationObjectCoords | null
+  setCoords: (coords: LocationType['coords']) => void
   address: ReverseGeocodeReturnType | null
   setAddress: (address: LocationType['address']) => void
   addressString: ReturnType<typeof formatAddress>
@@ -19,8 +19,8 @@ export interface LocationType {
 export const useLocationStore = create<LocationType>()((set, get) => ({
   loading: Platform.OS !== 'web',
   setLoading: (loading) => set({ loading }),
-  location: null, // TODO: rename to coords
-  setLocation: (location) => set({ location }),
+  coords: null,
+  setCoords: (coords) => set({ coords }),
   address: null,
   setAddress: (address) =>
     set({ address, addressString: formatAddress(address) }),
