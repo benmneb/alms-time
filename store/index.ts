@@ -27,6 +27,8 @@ export type DawnTypes = 'astro' | 'nautical' | 'civil'
 interface State {
   dawnTime: DawnTypes
   setDawnTime: (dawnTime: State['dawnTime']) => void
+  timeFormat: 'absolute' | 'relative'
+  setTimeFormat: (timeFormat: State['timeFormat']) => void
 }
 
 export const useStore = create<State>()(
@@ -34,6 +36,8 @@ export const useStore = create<State>()(
     (set, get) => ({
       dawnTime: 'nautical',
       setDawnTime: (dawnTime) => set({ dawnTime }),
+      timeFormat: 'absolute',
+      setTimeFormat: (timeFormat) => set({ timeFormat }),
     }),
     {
       name: 'alms-time-storage',

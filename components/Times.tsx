@@ -6,6 +6,7 @@ import { useSunTimes } from '../hooks/useSunTimes'
 import { GetTimesResult } from 'suncalc'
 import { DawnTypes, useStore } from '../store'
 import { formatRoundedTime } from '../helpers/formatRoundedTime'
+import { useRelativeTime } from '../hooks/useRelativeTime'
 
 const toSunCalcTypes: Partial<Record<DawnTypes, keyof GetTimesResult>> = {
   astro: 'nightEnd',
@@ -16,7 +17,11 @@ const toSunCalcTypes: Partial<Record<DawnTypes, keyof GetTimesResult>> = {
 export default function Times() {
   const { loading, location, sunTimes, addressString, refetch } = useSunTimes()
   const dawnTime = useStore((s) => s.dawnTime)
+  const timeFormat = useStore((s) => s.timeFormat)
+  const setTimeFormat = useStore((s) => s.setTimeFormat)
   const sunCalcKey = toSunCalcTypes?.[dawnTime]
+  const dawnRelative = useRelativeTime(sunTimes?.[sunCalcKey!])
+  const noonRelative = useRelativeTime(sunTimes?.solarNoon)
 
   if (loading) return <ActivityIndicator size="large" style={styles.loading} />
 
@@ -26,12 +31,26 @@ export default function Times() {
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Dawn</Text>
-      <Text style={styles.dawnRise}>
-        {formatRoundedTime(sunTimes[sunCalcKey], 'up')}
+      <Text
+        style={styles.dawnRise}
+        onPress={() =>
+          setTimeFormat(timeFormat === 'absolute' ? 'relative' : 'absolute')
+        }
+      >
+        {timeFormat === 'absolute'
+          ? formatRoundedTime(sunTimes[sunCalcKey], 'up')
+          : dawnRelative}
       </Text>
       <Text style={styles.label}>Solar Noon</Text>
-      <Text style={styles.solarNoon}>
-        {formatRoundedTime(sunTimes.solarNoon, 'down')}
+      <Text
+        style={styles.solarNoon}
+        onPress={() =>
+          setTimeFormat(timeFormat === 'absolute' ? 'relative' : 'absolute')
+        }
+      >
+        {timeFormat === 'absolute'
+          ? formatRoundedTime(sunTimes.solarNoon, 'down')
+          : noonRelative}
       </Text>
       <Text style={styles.address}>
         📍 {addressString ?? `${location.latitude}, ${location.longitude}`}

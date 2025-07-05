@@ -15,6 +15,8 @@ interface Props {
 export default function SettingsSheet({ ref }: Props) {
   const dawnTime = useStore((s) => s.dawnTime)
   const setDawnTime = useStore((s) => s.setDawnTime)
+  const timeFormat = useStore((s) => s.timeFormat)
+  const setTimeFormat = useStore((s) => s.setTimeFormat)
 
   return (
     <BottomSheetModal
@@ -34,7 +36,7 @@ export default function SettingsSheet({ ref }: Props) {
       <BottomSheetView style={styles.contentContainer}>
         <SafeAreaView edges={['bottom']}>
           <View style={styles.headingContainer}>
-            <Text style={styles.heading}>Change dawn time</Text>
+            <Text style={styles.heading}>Dawn time</Text>
             <Text style={styles.icon}>❓</Text>
           </View>
           <View style={styles.buttonContainer}>
@@ -52,6 +54,22 @@ export default function SettingsSheet({ ref }: Props) {
               variant={dawnTime === 'civil' ? 'solid' : 'outline'}
               title="Civil twilight"
               onPress={() => setDawnTime('civil')}
+            />
+          </View>
+          <View style={[styles.headingContainer, { marginTop: 20 }]}>
+            <Text style={styles.heading}>Time format</Text>
+            <Text style={styles.icon}>❓</Text>
+          </View>
+          <View style={styles.buttonContainer}>
+            <Button
+              variant={timeFormat === 'absolute' ? 'solid' : 'outline'}
+              title="Absolute"
+              onPress={() => setTimeFormat('absolute')}
+            />
+            <Button
+              variant={timeFormat === 'relative' ? 'solid' : 'outline'}
+              title="Relative"
+              onPress={() => setTimeFormat('relative')}
             />
           </View>
         </SafeAreaView>
