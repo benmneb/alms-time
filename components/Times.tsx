@@ -5,6 +5,7 @@ import NoSunTimes from './NoSunTimes'
 import { useSunTimes } from '../hooks/useSunTimes'
 import { GetTimesResult } from 'suncalc'
 import { DawnTypes, useStore } from '../store'
+import { formatRoundedTime } from '../helpers/formatRoundedTime'
 
 const toSunCalcTypes: Partial<Record<DawnTypes, keyof GetTimesResult>> = {
   astro: 'nightEnd',
@@ -26,11 +27,11 @@ export default function Times() {
     <View style={styles.container}>
       <Text style={styles.label}>Dawn</Text>
       <Text style={styles.dawnRise}>
-        {sunTimes[sunCalcKey].toLocaleTimeString()}
+        {formatRoundedTime(sunTimes[sunCalcKey], 'up')}
       </Text>
       <Text style={styles.label}>Solar Noon</Text>
       <Text style={styles.solarNoon}>
-        {sunTimes.solarNoon.toLocaleTimeString()}
+        {formatRoundedTime(sunTimes.solarNoon, 'down')}
       </Text>
       <Text style={styles.address}>
         📍 {addressString ?? `${location.latitude}, ${location.longitude}`}
