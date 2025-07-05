@@ -41,18 +41,21 @@ export default function SettingsSheet({ ref }: Props) {
           </View>
           <View style={styles.buttonContainer}>
             <Button
+              style={styles.button}
               variant={dawnTime === 'astro' ? 'solid' : 'outline'}
-              title="Astronomical twilight"
+              title="Astronomical"
               onPress={() => setDawnTime('astro')}
             />
             <Button
+              style={styles.button}
               variant={dawnTime === 'nautical' ? 'solid' : 'outline'}
-              title="Nautical twilight"
+              title="Nautical"
               onPress={() => setDawnTime('nautical')}
             />
             <Button
+              style={styles.button}
               variant={dawnTime === 'civil' ? 'solid' : 'outline'}
-              title="Civil twilight"
+              title="Civil"
               onPress={() => setDawnTime('civil')}
             />
           </View>
@@ -62,11 +65,13 @@ export default function SettingsSheet({ ref }: Props) {
           </View>
           <View style={styles.buttonContainer}>
             <Button
+              style={styles.button}
               variant={timeFormat === 'absolute' ? 'solid' : 'outline'}
               title="Absolute"
               onPress={() => setTimeFormat('absolute')}
             />
             <Button
+              style={styles.button}
               variant={timeFormat === 'relative' ? 'solid' : 'outline'}
               title="Relative"
               onPress={() => setTimeFormat('relative')}
@@ -99,5 +104,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 8,
+  },
+  button: {
+    flexGrow: 1,
   },
 })
