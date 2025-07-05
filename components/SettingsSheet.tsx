@@ -21,7 +21,7 @@ export default function SettingsSheet({ ref }: Props) {
   const setTimeFormat = useSettingsStore((s) => s.setTimeFormat)
   const locationFormat = useSettingsStore((s) => s.locationFormat)
   const setLocationFormat = useSettingsStore((s) => s.setLocationFormat)
-  const addressString = useLocationStore((s) => s.addressString)
+  const formattedAddress = useLocationStore((s) => s.formattedAddress)
 
   return (
     <BottomSheetModal
@@ -98,7 +98,7 @@ export default function SettingsSheet({ ref }: Props) {
               variant={locationFormat === 'address' ? 'solid' : 'outline'}
               title="Address"
               onPress={() => setLocationFormat('address')}
-              disabled={!addressString}
+              disabled={!formattedAddress}
             />
             <Button
               style={styles.button}

@@ -12,8 +12,8 @@ export interface LocationType {
   coords: Location.LocationObjectCoords | null
   setCoords: (coords: LocationType['coords']) => void
   address: ReverseGeocodeReturnType | null
+  formattedAddress: ReturnType<typeof formatAddress>
   setAddress: (address: LocationType['address']) => void
-  addressString: ReturnType<typeof formatAddress>
 }
 
 export const useLocationStore = create<LocationType>()((set, get) => ({
@@ -22,7 +22,7 @@ export const useLocationStore = create<LocationType>()((set, get) => ({
   coords: null,
   setCoords: (coords) => set({ coords }),
   address: null,
+  formattedAddress: null,
   setAddress: (address) =>
-    set({ address, addressString: formatAddress(address) }),
-  addressString: null,
+    set({ address, formattedAddress: formatAddress(address) }),
 }))

@@ -21,7 +21,7 @@ export default function Times() {
   const { refetch } = useSunTimes()
   const loading = useLocationStore((s) => s.loading)
   const location = useLocationStore((s) => s.coords)
-  const addressString = useLocationStore((s) => s.addressString)
+  const formattedAddress = useLocationStore((s) => s.formattedAddress)
   const sunTimes = useTimesStore((s) => s.sunTimes)
   const dawnType = useSettingsStore((s) => s.dawnType)
   const timeFormat = useSettingsStore((s) => s.timeFormat)
@@ -65,15 +65,15 @@ export default function Times() {
       <Text style={styles.address}>
         📍{' '}
         <Text
-          disabled={!addressString}
+          disabled={!formattedAddress}
           onPress={() =>
             setLocationFormat(
               locationFormat === 'address' ? 'coords' : 'address'
             )
           }
         >
-          {addressString && locationFormat === 'address'
-            ? addressString
+          {formattedAddress && locationFormat === 'address'
+            ? formattedAddress
             : `${location.latitude}, ${location.longitude}`}
         </Text>
       </Text>
