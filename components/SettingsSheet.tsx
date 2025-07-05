@@ -5,8 +5,10 @@ import {
   BottomSheetView,
   BottomSheetBackdrop,
 } from '@gorhom/bottom-sheet'
+import Feather from '@expo/vector-icons/Feather'
 import Button from './Button'
 import { useStore } from '../store'
+import IconButton from './IconButton'
 
 interface Props {
   ref: React.ForwardedRef<BottomSheetModal<any>> | undefined
@@ -37,7 +39,9 @@ export default function SettingsSheet({ ref }: Props) {
         <SafeAreaView edges={['bottom']}>
           <View style={styles.headingContainer}>
             <Text style={styles.heading}>Dawn time</Text>
-            <Text style={styles.icon}>❓</Text>
+            <IconButton style={styles.icon}>
+              <Feather name="help-circle" size={18} color="black" />
+            </IconButton>
           </View>
           <View style={styles.buttonContainer}>
             <Button
@@ -61,7 +65,9 @@ export default function SettingsSheet({ ref }: Props) {
           </View>
           <View style={[styles.headingContainer, { marginTop: 20 }]}>
             <Text style={styles.heading}>Time format</Text>
-            <Text style={styles.icon}>❓</Text>
+            <IconButton style={styles.icon}>
+              <Feather name="help-circle" size={18} color="black" />
+            </IconButton>
           </View>
           <View style={styles.buttonContainer}>
             <Button

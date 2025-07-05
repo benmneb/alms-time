@@ -12,7 +12,10 @@ import {
   BottomSheetModalProvider,
 } from '@gorhom/bottom-sheet'
 import { useCallback, useRef } from 'react'
+import Feather from '@expo/vector-icons/Feather'
 import SettingsSheet from './components/SettingsSheet'
+import Animated from 'react-native-reanimated'
+import IconButton from './components/IconButton'
 
 function Content() {
   const insets = useSafeAreaInsets()
@@ -26,7 +29,7 @@ function Content() {
     <SafeAreaView style={styles.root}>
       <StatusBar style="auto" />
       <Times />
-      <Pressable
+      <IconButton
         style={[
           styles.fab,
           {
@@ -36,8 +39,8 @@ function Content() {
         ]}
         onPress={handleSettingsPress}
       >
-        <Text style={{ fontSize: 42 }}>⚙️</Text>
-      </Pressable>
+        <Feather name="settings" size={28} color="black" />
+      </IconButton>
       <SettingsSheet ref={settingsSheetRef} />
     </SafeAreaView>
   )
