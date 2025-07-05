@@ -8,8 +8,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "build:web": "expo export -p web && npx workbox-cli generateSW workbox-config.js",
-    "predeploy": "pnpm run build:web",
-    "deploy": "gh-pages --nojekyll -d dist"
+    "predeploy:web": "pnpm run build:web",
+    "deploy:web": "gh-pages --nojekyll -d dist"
   },
   "dependencies": {
     "@expo/metro-runtime": "~5.0.4",
