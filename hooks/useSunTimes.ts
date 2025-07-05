@@ -1,53 +1,18 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect } from 'react'
 import { Platform } from 'react-native'
 import * as Location from 'expo-location'
-import SunCalc, { GetTimesResult } from 'suncalc'
-
-type WebGeocodeReturnType = { display_name: string | null }
-type ReverseGeocodeReturnType =
-  | Location.LocationGeocodedAddress
-  | WebGeocodeReturnType
-
-async function reverseWebGeocodeAsync(
-  lat: number,
-  lon: number
-): Promise<WebGeocodeReturnType> {
-  // Docs: https://nominatim.org/release-docs/develop/api/Reverse/
-  // License: http://osm.org/copyright
-  try {
-    const res = await fetch(
-      `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`
-    )
-    const { display_name } = await res.json()
-    return { display_name }
-  } catch (e) {
-    console.error(e)
-    return { display_name: null }
-  }
-}
-
-function formatAddress(
-  address: ReverseGeocodeReturnType | null
-): string | null {
-  if (!address) return null
-  if ('display_name' in address) return address.display_name // Came from web
-  return (
-    address.city ||
-    address.region ||
-    address.name ||
-    address.district ||
-    address.subregion ||
-    address.country ||
-    null
-  )
-}
+import SunCalc from 'suncalc'
+import { useLocationStore, useTimesStore } from '../store'
+import {
+  reverseWebGeocodeAsync,
+  WebGeocodeReturnType,
+} from '../helpers/reverseWebGeocodeAsync'
 
 export function useSunTimes() {
-  const [location, setLocation] =
-    useState<Location.LocationObjectCoords | null>(null)
-  const [address, setAddress] = useState<ReverseGeocodeReturnType | null>(null)
-  const [sunTimes, setSunTimes] = useState<GetTimesResult | null>(null)
-  const [loading, setLoading] = useState<boolean>(Platform.OS !== 'web')
+  const setLoading = useLocationStore((s) => s.setLoading)
+  const setLocation = useLocationStore((s) => s.setLocation)
+  const setAddress = useLocationStore((s) => s.setAddress)
+  const setSunTimes = useTimesStore((s) => s.setSunTimes)
 
   const fetchLocationAndSunTimes = useCallback(async () => {
     let cancelled = false
@@ -143,11 +108,6 @@ export function useSunTimes() {
   }, [])
 
   return {
-    loading,
-    location,
-    sunTimes,
-    address,
-    addressString: formatAddress(address),
     refetch: fetchLocationAndSunTimes,
   }
 }

@@ -7,7 +7,7 @@ import {
 } from '@gorhom/bottom-sheet'
 import Feather from '@expo/vector-icons/Feather'
 import Button from './Button'
-import { useStore } from '../store'
+import { useSettingsStore } from '../store'
 import IconButton from './IconButton'
 
 interface Props {
@@ -15,10 +15,10 @@ interface Props {
 }
 
 export default function SettingsSheet({ ref }: Props) {
-  const dawnTime = useStore((s) => s.dawnTime)
-  const setDawnTime = useStore((s) => s.setDawnTime)
-  const timeFormat = useStore((s) => s.timeFormat)
-  const setTimeFormat = useStore((s) => s.setTimeFormat)
+  const dawnTime = useSettingsStore((s) => s.dawnTime)
+  const setDawnTime = useSettingsStore((s) => s.setDawnTime)
+  const timeFormat = useSettingsStore((s) => s.timeFormat)
+  const setTimeFormat = useSettingsStore((s) => s.setTimeFormat)
 
   return (
     <BottomSheetModal

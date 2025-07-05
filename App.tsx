@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar'
-import { Pressable, Text, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
 import Times from './components/Times'
 import {
   SafeAreaProvider,
@@ -14,7 +14,6 @@ import {
 import { useCallback, useRef } from 'react'
 import Feather from '@expo/vector-icons/Feather'
 import SettingsSheet from './components/SettingsSheet'
-import Animated from 'react-native-reanimated'
 import IconButton from './components/IconButton'
 
 function Content() {
