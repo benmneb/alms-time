@@ -32,7 +32,9 @@ export default function Times() {
       <Text style={styles.solarNoon}>
         {sunTimes.solarNoon.toLocaleTimeString()}
       </Text>
-      <Text style={styles.address}>📍 {addressString}</Text>
+      <Text style={styles.address}>
+        📍 {addressString ?? `${location.latitude}, ${location.longitude}`}
+      </Text>
     </View>
   )
 }

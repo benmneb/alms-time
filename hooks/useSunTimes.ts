@@ -3,7 +3,7 @@ import { Platform } from 'react-native'
 import * as Location from 'expo-location'
 import SunCalc, { GetTimesResult } from 'suncalc'
 
-type WebGeocodeReturnType = { display_name: string }
+type WebGeocodeReturnType = { display_name: string | null }
 type ReverseGeocodeReturnType =
   | Location.LocationGeocodedAddress
   | WebGeocodeReturnType
@@ -22,12 +22,14 @@ async function reverseWebGeocodeAsync(
     return { display_name }
   } catch (e) {
     console.error(e)
-    return { display_name: 'Unknown location' }
+    return { display_name: null }
   }
 }
 
-function formatAddress(address: ReverseGeocodeReturnType | null): string {
-  if (!address) return 'Unknown location'
+function formatAddress(
+  address: ReverseGeocodeReturnType | null
+): string | null {
+  if (!address) return null
   if ('display_name' in address) return address.display_name // Came from web
   return (
     address.city ||
@@ -36,7 +38,7 @@ function formatAddress(address: ReverseGeocodeReturnType | null): string {
     address.district ||
     address.subregion ||
     address.country ||
-    'Unknown location'
+    null
   )
 }
 
