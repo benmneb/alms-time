@@ -138,7 +138,7 @@ export function useSunTimes() {
   }, [])
 
   useEffect(() => {
-    if (Platform.OS === 'web') return
+    if (Platform.OS === 'web') return // Ask after user interaction: https://web.dev/articles/permissions-best-practices
     fetchLocationAndSunTimes()
   }, [])
 
