@@ -7,7 +7,7 @@ import {
 } from '@gorhom/bottom-sheet'
 import Feather from '@expo/vector-icons/Feather'
 import Button from './Button'
-import { useSettingsStore } from '../store'
+import { useLocationStore, useSettingsStore } from '../store'
 import IconButton from './IconButton'
 
 interface Props {
@@ -19,6 +19,9 @@ export default function SettingsSheet({ ref }: Props) {
   const setDawnType = useSettingsStore((s) => s.setDawnType)
   const timeFormat = useSettingsStore((s) => s.timeFormat)
   const setTimeFormat = useSettingsStore((s) => s.setTimeFormat)
+  const locationFormat = useSettingsStore((s) => s.locationFormat)
+  const setLocationFormat = useSettingsStore((s) => s.setLocationFormat)
+  const addressString = useLocationStore((s) => s.addressString)
 
   return (
     <BottomSheetModal
@@ -81,6 +84,27 @@ export default function SettingsSheet({ ref }: Props) {
               variant={timeFormat === 'relative' ? 'solid' : 'outline'}
               title="Relative"
               onPress={() => setTimeFormat('relative')}
+            />
+          </View>
+          <View style={[styles.headingContainer, { marginTop: 20 }]}>
+            <Text style={styles.heading}>Location format</Text>
+            <IconButton style={styles.icon}>
+              <Feather name="help-circle" size={18} color="black" />
+            </IconButton>
+          </View>
+          <View style={styles.buttonContainer}>
+            <Button
+              style={styles.button}
+              variant={locationFormat === 'address' ? 'solid' : 'outline'}
+              title="Address"
+              onPress={() => setLocationFormat('address')}
+              disabled={!addressString}
+            />
+            <Button
+              style={styles.button}
+              variant={locationFormat === 'coords' ? 'solid' : 'outline'}
+              title="Coordinates"
+              onPress={() => setLocationFormat('coords')}
             />
           </View>
         </SafeAreaView>

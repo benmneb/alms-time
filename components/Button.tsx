@@ -1,8 +1,15 @@
-import { Text, Pressable, StyleProp, StyleSheet, ViewStyle } from 'react-native'
+import {
+  Text,
+  Pressable,
+  StyleProp,
+  StyleSheet,
+  ViewStyle,
+  PressableProps,
+} from 'react-native'
 import { usePressScale } from '../hooks/usePressScale'
 import Animated from 'react-native-reanimated'
 
-interface Props {
+interface Props extends PressableProps {
   title: string
   onPress?: () => void
   style?: StyleProp<ViewStyle>
@@ -16,6 +23,7 @@ export default function Button({
   onPress,
   style,
   variant = 'solid',
+  ...props
 }: Props) {
   const { animatedStyle, onPressIn, onPressOut } = usePressScale()
 
@@ -24,9 +32,22 @@ export default function Button({
       onPressIn={onPressIn}
       onPressOut={onPressOut}
       onPress={onPress}
-      style={[animatedStyle, styles[variant], style]}
+      style={[
+        animatedStyle,
+        styles[variant],
+        props.disabled && styles.disabled,
+        style,
+      ]}
+      {...props}
     >
-      <Text style={styles[`${variant}-title`]}>{title}</Text>
+      <Text
+        style={[
+          styles[`${variant}-title`],
+          props.disabled && styles['disabled-title'],
+        ]}
+      >
+        {title}
+      </Text>
     </AnimatedPressable>
   )
 }
@@ -44,6 +65,19 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 8,
+  },
+  disabled: {
+    opacity: 0.3,
+    borderWidth: 2,
+    borderColor: 'grey', // TODO
+    backgroundColor: 'transparent',
+    backfaceVisibility: 'hidden',
+  },
+  ['disabled-title']: {
+    color: 'grey', // TODO
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   ['solid-title']: {
     color: '#FFFFFF', // TODO

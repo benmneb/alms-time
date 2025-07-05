@@ -26,6 +26,8 @@ export default function Times() {
   const dawnType = useSettingsStore((s) => s.dawnType)
   const timeFormat = useSettingsStore((s) => s.timeFormat)
   const setTimeFormat = useSettingsStore((s) => s.setTimeFormat)
+  const locationFormat = useSettingsStore((s) => s.locationFormat)
+  const setLocationFormat = useSettingsStore((s) => s.setLocationFormat)
 
   const sunCalcKey = toSunCalcTypes?.[dawnType]
   const dawnRelative = useRelativeTime(sunTimes?.[sunCalcKey!])
@@ -61,7 +63,19 @@ export default function Times() {
           : noonRelative}
       </Text>
       <Text style={styles.address}>
-        📍 {addressString ?? `${location.latitude}, ${location.longitude}`}
+        📍{' '}
+        <Text
+          disabled={!addressString}
+          onPress={() =>
+            setLocationFormat(
+              locationFormat === 'address' ? 'coords' : 'address'
+            )
+          }
+        >
+          {addressString && locationFormat === 'address'
+            ? addressString
+            : `${location.latitude}, ${location.longitude}`}
+        </Text>
       </Text>
     </View>
   )
