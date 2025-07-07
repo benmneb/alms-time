@@ -5,10 +5,10 @@ import { useSunTimes } from '../hooks/useSunTimes'
 import { formatRoundedTime } from '../helpers/formatRoundedTime'
 import { useRelativeTime } from '../hooks/useRelativeTime'
 import { useTimesToShow } from '../hooks/useTimesToShow'
-import { toSunCalcTypes } from '../constants/toSunCalcTypes'
 import { useLocationStore } from '../store/location'
 import { useTimesStore } from '../store/times'
 import { useSettingsStore } from '../store/settings'
+import { getSunCalcDawnKey } from '../helpers/getSunCalcDawnKey'
 
 export default function Times() {
   const { refetch } = useSunTimes()
@@ -24,9 +24,8 @@ export default function Times() {
   const setLocationFormat = useSettingsStore((s) => s.setLocationFormat)
   const showLocation = useSettingsStore((s) => s.showLocation)
   const { showDawn, showNoon, showTomorrowDawn } = useTimesToShow()
-  const sunCalcDawnKey = toSunCalcTypes[dawnType]
   const sunTimes = showTomorrowDawn ? tomorrowsTimes : todaysTimes
-  const dawnRelative = useRelativeTime(sunTimes?.[sunCalcDawnKey])
+  const dawnRelative = useRelativeTime(sunTimes?.[getSunCalcDawnKey(dawnType)])
   const noonRelative = useRelativeTime(sunTimes?.solarNoon)
 
   if (loading) return <ActivityIndicator size="large" style={styles.loading} />
@@ -46,7 +45,7 @@ export default function Times() {
             }
           >
             {timeFormat === 'absolute'
-              ? formatRoundedTime(sunTimes[sunCalcDawnKey], 'up')
+              ? formatRoundedTime(sunTimes[getSunCalcDawnKey(dawnType)], 'up')
               : dawnRelative}
           </Text>
         </>

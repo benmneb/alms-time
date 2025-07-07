@@ -1,4 +1,4 @@
-import { toSunCalcTypes } from '../constants/toSunCalcTypes'
+import { getSunCalcDawnKey } from '../helpers/getSunCalcDawnKey'
 import { useSettingsStore } from '../store/settings'
 import { useTimesStore } from '../store/times'
 
@@ -13,7 +13,6 @@ export function useTimesToShow(): {
   const onlyShowNextTime = useSettingsStore((s) => s.onlyShowNextTime)
   const sunTimes = useTimesStore((s) => s.sunTimes)
   const dawnType = useSettingsStore((s) => s.dawnType)
-  const sunCalcDawnKey = toSunCalcTypes[dawnType]
 
   let showDawn = true
   let showNoon = true
@@ -23,7 +22,8 @@ export function useTimesToShow(): {
     return { showDawn, showNoon, showTomorrowDawn }
 
   const now = new Date()
-  const beforeDawn = sunTimes[sunCalcDawnKey].getTime() > now.getTime()
+  const beforeDawn =
+    sunTimes[getSunCalcDawnKey(dawnType)].getTime() > now.getTime()
   const beforeNoon = sunTimes.solarNoon.getTime() > now.getTime()
 
   showDawn = beforeDawn
