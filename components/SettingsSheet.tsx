@@ -9,6 +9,7 @@ import Button from './Button'
 import { useLocationStore, useSettingsStore } from '../store'
 import IconButton from './IconButton'
 import { HelpIcon } from './icons/Help'
+import { Switch } from 'react-native-gesture-handler'
 
 interface Props {
   ref: React.ForwardedRef<BottomSheetModal<any>> | undefined
@@ -22,6 +23,8 @@ export default function SettingsSheet({ ref }: Props) {
   const locationFormat = useSettingsStore((s) => s.locationFormat)
   const setLocationFormat = useSettingsStore((s) => s.setLocationFormat)
   const formattedAddress = useLocationStore((s) => s.formattedAddress)
+  const showLocation = useSettingsStore((s) => s.showLocation)
+  const setShowLocation = useSettingsStore((s) => s.setShowLocation)
 
   return (
     <BottomSheetModal
@@ -42,9 +45,10 @@ export default function SettingsSheet({ ref }: Props) {
         <SafeAreaView edges={['bottom']}>
           <View style={styles.headingContainer}>
             <Text style={styles.heading}>Dawn time</Text>
-            <IconButton style={styles.icon}>
-              <HelpIcon />
-            </IconButton>
+            <IconButton
+              style={styles.iconButton}
+              icon={<HelpIcon stroke="#999" />}
+            />
           </View>
           <View style={styles.buttonContainer}>
             <Button
@@ -68,9 +72,10 @@ export default function SettingsSheet({ ref }: Props) {
           </View>
           <View style={[styles.headingContainer, { marginTop: 20 }]}>
             <Text style={styles.heading}>Time format</Text>
-            <IconButton style={styles.icon}>
-              <HelpIcon />
-            </IconButton>
+            <IconButton
+              style={styles.iconButton}
+              icon={<HelpIcon stroke="#999" />}
+            />
           </View>
           <View style={styles.buttonContainer}>
             <Button
@@ -88,9 +93,10 @@ export default function SettingsSheet({ ref }: Props) {
           </View>
           <View style={[styles.headingContainer, { marginTop: 20 }]}>
             <Text style={styles.heading}>Location format</Text>
-            <IconButton style={styles.icon}>
-              <HelpIcon />
-            </IconButton>
+            <IconButton
+              style={styles.iconButton}
+              icon={<HelpIcon stroke="#999" />}
+            />
           </View>
           <View style={styles.buttonContainer}>
             <Button
@@ -98,14 +104,27 @@ export default function SettingsSheet({ ref }: Props) {
               variant={locationFormat === 'address' ? 'solid' : 'outline'}
               title="Address"
               onPress={() => setLocationFormat('address')}
-              disabled={!formattedAddress}
+              disabled={!formattedAddress || !showLocation}
             />
             <Button
               style={styles.button}
               variant={locationFormat === 'coords' ? 'solid' : 'outline'}
               title="Coordinates"
               onPress={() => setLocationFormat('coords')}
+              disabled={!showLocation}
             />
+          </View>
+          <View style={[styles.switchContainer, { marginTop: 20 }]}>
+            <View
+              style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}
+            >
+              <Text style={styles.heading}>Show location</Text>
+              <IconButton
+                style={styles.iconButton}
+                icon={<HelpIcon stroke="#999" />}
+              />
+            </View>
+            <Switch value={showLocation} onValueChange={setShowLocation} />
           </View>
         </SafeAreaView>
       </BottomSheetView>
@@ -122,20 +141,28 @@ const styles = StyleSheet.create({
   },
   headingContainer: {
     flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 16,
+  },
+  switchContainer: {
+    flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
+    gap: 8,
     marginBottom: 16,
   },
   heading: {
     fontSize: 18,
     fontWeight: 'bold',
   },
-  icon: {},
+  iconButton: {},
   buttonContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 8,
   },
   button: {
-    flexGrow: 1,
+    // flexGrow: 1,
   },
 })

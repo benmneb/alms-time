@@ -28,6 +28,7 @@ export default function Times() {
   const setTimeFormat = useSettingsStore((s) => s.setTimeFormat)
   const locationFormat = useSettingsStore((s) => s.locationFormat)
   const setLocationFormat = useSettingsStore((s) => s.setLocationFormat)
+  const showLocation = useSettingsStore((s) => s.showLocation)
 
   const sunCalcKey = toSunCalcTypes?.[dawnType]
   const dawnRelative = useRelativeTime(sunTimes?.[sunCalcKey!])
@@ -62,21 +63,23 @@ export default function Times() {
           ? formatRoundedTime(sunTimes.solarNoon, 'down')
           : noonRelative}
       </Text>
-      <Text style={styles.address}>
-        📍{' '}
-        <Text
-          disabled={!formattedAddress}
-          onPress={() =>
-            setLocationFormat(
-              locationFormat === 'address' ? 'coords' : 'address'
-            )
-          }
-        >
-          {formattedAddress && locationFormat === 'address'
-            ? formattedAddress
-            : `${location.latitude}, ${location.longitude}`}
+      {showLocation && (
+        <Text style={styles.address}>
+          📍{' '}
+          <Text
+            disabled={!formattedAddress}
+            onPress={() =>
+              setLocationFormat(
+                locationFormat === 'address' ? 'coords' : 'address'
+              )
+            }
+          >
+            {formattedAddress && locationFormat === 'address'
+              ? formattedAddress
+              : `${location.latitude}, ${location.longitude}`}
+          </Text>
         </Text>
-      </Text>
+      )}
     </View>
   )
 }

@@ -9,6 +9,8 @@ export interface SettingsType {
   setTimeFormat: (timeFormat: SettingsType['timeFormat']) => void
   locationFormat: 'address' | 'coords'
   setLocationFormat: (locationFormat: SettingsType['locationFormat']) => void
+  showLocation: boolean
+  setShowLocation: (showLocation: boolean) => void
 }
 
 export const useSettingsStore = create<SettingsType>()(
@@ -20,6 +22,8 @@ export const useSettingsStore = create<SettingsType>()(
       setTimeFormat: (timeFormat) => set({ timeFormat }),
       locationFormat: 'address',
       setLocationFormat: (locationFormat) => set({ locationFormat }),
+      showLocation: true,
+      setShowLocation: (showLocation) => set({ showLocation }),
     }),
     {
       name: 'alms-time-settings',
