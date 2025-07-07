@@ -10,6 +10,7 @@ import { useTimesStore } from '../store/times'
 import { useSettingsStore } from '../store/settings'
 import { getSunCalcDawnKey } from '../helpers/getSunCalcDawnKey'
 import { palette } from '../theme/palette'
+import { theme } from '../theme'
 
 export default function Times() {
   const { refetch } = useSunTimes()
@@ -90,10 +91,12 @@ export default function Times() {
 const styles = StyleSheet.create({
   loading: {
     marginTop: 50,
+    color: theme.palette.blue,
   },
   container: {
     padding: 24,
-    // TODO: left align on mobile
+    width: '100%',
+    maxWidth: theme.breakpoints.sm,
   },
   label: {
     fontSize: 28,
