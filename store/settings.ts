@@ -11,6 +11,8 @@ export interface SettingsType {
   setLocationFormat: (locationFormat: SettingsType['locationFormat']) => void
   showLocation: boolean
   setShowLocation: (showLocation: boolean) => void
+  onlyShowNextTime: boolean
+  setOnlyShowNextTime: (onlyShowNextTime: boolean) => void
 }
 
 export const useSettingsStore = create<SettingsType>()(
@@ -24,6 +26,8 @@ export const useSettingsStore = create<SettingsType>()(
       setLocationFormat: (locationFormat) => set({ locationFormat }),
       showLocation: true,
       setShowLocation: (showLocation) => set({ showLocation }),
+      onlyShowNextTime: false,
+      setOnlyShowNextTime: (onlyShowNextTime) => set({ onlyShowNextTime }),
     }),
     {
       name: 'alms-time-settings',

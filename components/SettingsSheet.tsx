@@ -6,10 +6,11 @@ import {
   BottomSheetBackdrop,
 } from '@gorhom/bottom-sheet'
 import Button from './Button'
-import { useLocationStore, useSettingsStore } from '../store'
 import IconButton from './IconButton'
 import { HelpIcon } from './icons/Help'
 import { Switch } from 'react-native-gesture-handler'
+import { useSettingsStore } from '../store/settings'
+import { useLocationStore } from '../store/location'
 
 interface Props {
   ref: React.ForwardedRef<BottomSheetModal<any>> | undefined
@@ -25,6 +26,8 @@ export default function SettingsSheet({ ref }: Props) {
   const formattedAddress = useLocationStore((s) => s.formattedAddress)
   const showLocation = useSettingsStore((s) => s.showLocation)
   const setShowLocation = useSettingsStore((s) => s.setShowLocation)
+  const onlyShowNextTime = useSettingsStore((s) => s.onlyShowNextTime)
+  const setOnlyShowNextTime = useSettingsStore((s) => s.setOnlyShowNextTime)
 
   return (
     <BottomSheetModal
@@ -115,9 +118,7 @@ export default function SettingsSheet({ ref }: Props) {
             />
           </View>
           <View style={[styles.switchContainer, { marginTop: 20 }]}>
-            <View
-              style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}
-            >
+            <View style={styles.switchHeadingContainer}>
               <Text style={styles.heading}>Show location</Text>
               <IconButton
                 style={styles.iconButton}
@@ -125,6 +126,19 @@ export default function SettingsSheet({ ref }: Props) {
               />
             </View>
             <Switch value={showLocation} onValueChange={setShowLocation} />
+          </View>
+          <View style={[styles.switchContainer]}>
+            <View style={styles.switchHeadingContainer}>
+              <Text style={styles.heading}>Only show next time</Text>
+              <IconButton
+                style={styles.iconButton}
+                icon={<HelpIcon stroke="#999" />}
+              />
+            </View>
+            <Switch
+              value={onlyShowNextTime}
+              onValueChange={setOnlyShowNextTime}
+            />
           </View>
         </SafeAreaView>
       </BottomSheetView>
@@ -149,8 +163,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    gap: 8,
     marginBottom: 16,
+  },
+  switchHeadingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
   },
   heading: {
     fontSize: 18,

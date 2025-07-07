@@ -1,20 +1,14 @@
 import { View, Text, ActivityIndicator, StyleSheet } from 'react-native'
 import NoLocation from './NoLocation'
 import NoSunTimes from './NoSunTimes'
-import { GetTimesResult } from 'suncalc'
 import { useSunTimes } from '../hooks/useSunTimes'
-import { useLocationStore, useSettingsStore, useTimesStore } from '../store'
 import { formatRoundedTime } from '../helpers/formatRoundedTime'
 import { useRelativeTime } from '../hooks/useRelativeTime'
-import { SettingsType } from '../store/settings'
-
-const toSunCalcTypes: Partial<
-  Record<SettingsType['dawnType'], keyof GetTimesResult>
-> = {
-  astro: 'nightEnd',
-  nautical: 'nauticalDawn',
-  civil: 'dawn',
-}
+import { useTimesToShow } from '../hooks/useTimesToShow'
+import { toSunCalcTypes } from '../constants/toSunCalcTypes'
+import { useLocationStore } from '../store/location'
+import { useTimesStore } from '../store/times'
+import { useSettingsStore } from '../store/settings'
 
 export default function Times() {
   const { refetch } = useSunTimes()
@@ -28,40 +22,48 @@ export default function Times() {
   const locationFormat = useSettingsStore((s) => s.locationFormat)
   const setLocationFormat = useSettingsStore((s) => s.setLocationFormat)
   const showLocation = useSettingsStore((s) => s.showLocation)
-
-  const sunCalcKey = toSunCalcTypes?.[dawnType]
-  const dawnRelative = useRelativeTime(sunTimes?.[sunCalcKey!])
+  const { showDawn, showNoon } = useTimesToShow()
+  const sunCalcDawnKey = toSunCalcTypes[dawnType]
+  const dawnRelative = useRelativeTime(sunTimes?.[sunCalcDawnKey])
   const noonRelative = useRelativeTime(sunTimes?.solarNoon)
 
   if (loading) return <ActivityIndicator size="large" style={styles.loading} />
 
   if (!location) return <NoLocation refetch={refetch} />
-  if (!sunTimes || !sunCalcKey) return <NoSunTimes refetch={refetch} />
+  if (!sunTimes) return <NoSunTimes refetch={refetch} />
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>Dawn</Text>
-      <Text
-        style={styles.dawnRise}
-        onPress={() =>
-          setTimeFormat(timeFormat === 'absolute' ? 'relative' : 'absolute')
-        }
-      >
-        {timeFormat === 'absolute'
-          ? formatRoundedTime(sunTimes[sunCalcKey], 'up')
-          : dawnRelative}
-      </Text>
-      <Text style={styles.label}>Solar Noon</Text>
-      <Text
-        style={styles.solarNoon}
-        onPress={() =>
-          setTimeFormat(timeFormat === 'absolute' ? 'relative' : 'absolute')
-        }
-      >
-        {timeFormat === 'absolute'
-          ? formatRoundedTime(sunTimes.solarNoon, 'down')
-          : noonRelative}
-      </Text>
+      {showDawn && (
+        <>
+          <Text style={styles.label}>Dawn</Text>
+          <Text
+            style={styles.dawnRise}
+            onPress={() =>
+              setTimeFormat(timeFormat === 'absolute' ? 'relative' : 'absolute')
+            }
+          >
+            {timeFormat === 'absolute'
+              ? formatRoundedTime(sunTimes[sunCalcDawnKey], 'up')
+              : dawnRelative}
+          </Text>
+        </>
+      )}
+      {showNoon && (
+        <>
+          <Text style={styles.label}>Solar Noon</Text>
+          <Text
+            style={styles.solarNoon}
+            onPress={() =>
+              setTimeFormat(timeFormat === 'absolute' ? 'relative' : 'absolute')
+            }
+          >
+            {timeFormat === 'absolute'
+              ? formatRoundedTime(sunTimes.solarNoon, 'down')
+              : noonRelative}
+          </Text>
+        </>
+      )}
       {showLocation && (
         <Text style={styles.address}>
           📍{' '}
