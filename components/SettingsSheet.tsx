@@ -5,10 +5,10 @@ import {
   BottomSheetView,
   BottomSheetBackdrop,
 } from '@gorhom/bottom-sheet'
-import Feather from '@expo/vector-icons/Feather'
 import Button from './Button'
 import { useLocationStore, useSettingsStore } from '../store'
 import IconButton from './IconButton'
+import { HelpIcon } from './icons/Help'
 
 interface Props {
   ref: React.ForwardedRef<BottomSheetModal<any>> | undefined
@@ -43,7 +43,7 @@ export default function SettingsSheet({ ref }: Props) {
           <View style={styles.headingContainer}>
             <Text style={styles.heading}>Dawn time</Text>
             <IconButton style={styles.icon}>
-              <Feather name="help-circle" size={18} color="black" />
+              <HelpIcon />
             </IconButton>
           </View>
           <View style={styles.buttonContainer}>
@@ -69,7 +69,7 @@ export default function SettingsSheet({ ref }: Props) {
           <View style={[styles.headingContainer, { marginTop: 20 }]}>
             <Text style={styles.heading}>Time format</Text>
             <IconButton style={styles.icon}>
-              <Feather name="help-circle" size={18} color="black" />
+              <HelpIcon />
             </IconButton>
           </View>
           <View style={styles.buttonContainer}>
@@ -89,7 +89,7 @@ export default function SettingsSheet({ ref }: Props) {
           <View style={[styles.headingContainer, { marginTop: 20 }]}>
             <Text style={styles.heading}>Location format</Text>
             <IconButton style={styles.icon}>
-              <Feather name="help-circle" size={18} color="black" />
+              <HelpIcon />
             </IconButton>
           </View>
           <View style={styles.buttonContainer}>

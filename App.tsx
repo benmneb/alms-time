@@ -12,9 +12,9 @@ import {
   BottomSheetModalProvider,
 } from '@gorhom/bottom-sheet'
 import { useCallback, useRef } from 'react'
-import Feather from '@expo/vector-icons/Feather'
 import SettingsSheet from './components/SettingsSheet'
 import IconButton from './components/IconButton'
+import { SettingsIcon } from './components/icons/Settings'
 
 function Content() {
   const insets = useSafeAreaInsets()
@@ -38,7 +38,7 @@ function Content() {
         ]}
         onPress={handleSettingsPress}
       >
-        <Feather name="settings" size={28} color="black" />
+        <SettingsIcon />
       </IconButton>
       <SettingsSheet ref={settingsSheetRef} />
     </SafeAreaView>
