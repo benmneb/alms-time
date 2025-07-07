@@ -33,7 +33,7 @@ function Content() {
           styles.fab,
           {
             right: 24 + insets.right,
-            bottom: 36 + insets.bottom,
+            bottom: 24 + insets.bottom,
           },
         ]}
         onPress={handleSettingsPress}
