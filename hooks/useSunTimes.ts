@@ -11,6 +11,7 @@ export function useSunTimes() {
   const setCoords = useLocationStore((s) => s.setCoords)
   const setAddress = useLocationStore((s) => s.setAddress)
   const setSunTimes = useTimesStore((s) => s.setSunTimes)
+  const setTomorrowsTimes = useTimesStore((s) => s.setTomorrowsTimes)
 
   const fetchLocationAndSunTimes = useCallback(async () => {
     let cancelled = false
@@ -86,9 +87,22 @@ export function useSunTimes() {
       }
 
       // Calculate sun times
-      const now = new Date()
-      const times = SunCalc.getTimes(now, coords.latitude, coords.longitude)
-      if (!cancelled) setSunTimes(times)
+      const today = new Date()
+      const tomorrow = new Date(new Date().setDate(today.getDate() + 1))
+      const todaysTimes = SunCalc.getTimes(
+        today,
+        coords.latitude,
+        coords.longitude
+      )
+      const tomorrowsTimes = SunCalc.getTimes(
+        tomorrow,
+        coords.latitude,
+        coords.longitude
+      )
+      if (!cancelled) {
+        setSunTimes(todaysTimes)
+        setTomorrowsTimes(tomorrowsTimes)
+      }
     } catch (error) {
       console.error('Getting sunTimes:', error)
     } finally {

@@ -5,7 +5,11 @@ import { useTimesStore } from '../store/times'
 /**
  * Determines which times to show based on the `onlyShowNextTime` state setting.
  */
-export function useTimesToShow(): { showDawn: boolean; showNoon: boolean } {
+export function useTimesToShow(): {
+  showDawn: boolean
+  showNoon: boolean
+  showTomorrowDawn: boolean
+} {
   const onlyShowNextTime = useSettingsStore((s) => s.onlyShowNextTime)
   const sunTimes = useTimesStore((s) => s.sunTimes)
   const dawnType = useSettingsStore((s) => s.dawnType)
@@ -13,8 +17,10 @@ export function useTimesToShow(): { showDawn: boolean; showNoon: boolean } {
 
   let showDawn = true
   let showNoon = true
+  let showTomorrowDawn = false
 
-  if (!onlyShowNextTime || !sunTimes) return { showDawn, showNoon }
+  if (!onlyShowNextTime || !sunTimes)
+    return { showDawn, showNoon, showTomorrowDawn }
 
   const now = new Date()
   const beforeDawn = sunTimes[sunCalcDawnKey].getTime() > now.getTime()
@@ -22,8 +28,7 @@ export function useTimesToShow(): { showDawn: boolean; showNoon: boolean } {
 
   showDawn = beforeDawn
   showNoon = !beforeDawn && beforeNoon
+  showTomorrowDawn = !beforeDawn && !beforeNoon
 
-  // TODO: If both are in the past, show tomorrows next time
-
-  return { showDawn, showNoon }
+  return { showDawn, showNoon, showTomorrowDawn }
 }

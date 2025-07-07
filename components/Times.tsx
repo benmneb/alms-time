@@ -15,15 +15,17 @@ export default function Times() {
   const loading = useLocationStore((s) => s.loading)
   const location = useLocationStore((s) => s.coords)
   const formattedAddress = useLocationStore((s) => s.formattedAddress)
-  const sunTimes = useTimesStore((s) => s.sunTimes)
+  const todaysTimes = useTimesStore((s) => s.sunTimes)
+  const tomorrowsTimes = useTimesStore((s) => s.tomorrowsTimes)
   const dawnType = useSettingsStore((s) => s.dawnType)
   const timeFormat = useSettingsStore((s) => s.timeFormat)
   const setTimeFormat = useSettingsStore((s) => s.setTimeFormat)
   const locationFormat = useSettingsStore((s) => s.locationFormat)
   const setLocationFormat = useSettingsStore((s) => s.setLocationFormat)
   const showLocation = useSettingsStore((s) => s.showLocation)
-  const { showDawn, showNoon } = useTimesToShow()
+  const { showDawn, showNoon, showTomorrowDawn } = useTimesToShow()
   const sunCalcDawnKey = toSunCalcTypes[dawnType]
+  const sunTimes = showTomorrowDawn ? tomorrowsTimes : todaysTimes
   const dawnRelative = useRelativeTime(sunTimes?.[sunCalcDawnKey])
   const noonRelative = useRelativeTime(sunTimes?.solarNoon)
 
@@ -34,7 +36,7 @@ export default function Times() {
 
   return (
     <View style={styles.container}>
-      {showDawn && (
+      {(showDawn || showTomorrowDawn) && (
         <>
           <Text style={styles.label}>Dawn</Text>
           <Text
