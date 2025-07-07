@@ -11,7 +11,7 @@ import { HelpIcon } from './icons/Help'
 import { useSettingsStore } from '../store/settings'
 import { useLocationStore } from '../store/location'
 import { Switch } from './Switch'
-import { palette } from '../theme/palette'
+import { theme } from '../theme'
 
 interface Props {
   ref: React.ForwardedRef<BottomSheetModal<any>> | undefined
@@ -44,7 +44,7 @@ export default function SettingsSheet({ ref }: Props) {
           style={{ cursor: 'pointer' }}
         />
       )}
-      backgroundStyle={{ backgroundColor: palette.background }}
+      backgroundStyle={{ backgroundColor: theme.palette.background }}
     >
       <BottomSheetView style={styles.contentContainer}>
         <SafeAreaView edges={['bottom']}>
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   textDisabled: {
-    color: palette.text.muted,
+    color: theme.palette.text.muted,
     opacity: 0.3,
   },
   iconButton: {},

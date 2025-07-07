@@ -8,7 +8,7 @@ import {
 } from 'react-native'
 import { usePressScale } from '../hooks/usePressScale'
 import Animated from 'react-native-reanimated'
-import { palette } from '../theme/palette'
+import { theme } from '../theme'
 
 interface Props extends PressableProps {
   title: string
@@ -55,14 +55,14 @@ export default function Button({
 
 const styles = StyleSheet.create({
   solid: {
-    backgroundColor: palette.blue,
+    backgroundColor: theme.palette.blue,
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 8,
   },
   outline: {
     borderWidth: 2,
-    borderColor: palette.blue,
+    borderColor: theme.palette.blue,
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 8,
@@ -70,24 +70,24 @@ const styles = StyleSheet.create({
   disabled: {
     opacity: 0.3,
     borderWidth: 2,
-    borderColor: palette.text.muted,
+    borderColor: theme.palette.text.muted,
     backgroundColor: 'transparent',
     backfaceVisibility: 'hidden',
   },
   ['disabled-title']: {
-    color: palette.text.muted,
+    color: theme.palette.text.muted,
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',
   },
   ['solid-title']: {
-    color: palette.background,
+    color: theme.palette.background,
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',
   },
   ['outline-title']: {
-    color: palette.blue,
+    color: theme.palette.blue,
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',

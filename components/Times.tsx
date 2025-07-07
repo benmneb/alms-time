@@ -9,7 +9,6 @@ import { useLocationStore } from '../store/location'
 import { useTimesStore } from '../store/times'
 import { useSettingsStore } from '../store/settings'
 import { getSunCalcDawnKey } from '../helpers/getSunCalcDawnKey'
-import { palette } from '../theme/palette'
 import { theme } from '../theme'
 
 export default function Times() {
@@ -100,7 +99,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 28,
-    color: palette.text.muted,
+    color: theme.palette.text.muted,
   },
   dawnRise: {
     marginBottom: 8,

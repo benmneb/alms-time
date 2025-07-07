@@ -15,7 +15,7 @@ import { useCallback, useRef } from 'react'
 import SettingsSheet from './components/SettingsSheet'
 import IconButton from './components/IconButton'
 import { SettingsIcon } from './components/icons/Settings'
-import { palette } from './theme/palette'
+import { theme } from './theme'
 
 function Content() {
   const insets = useSafeAreaInsets()
@@ -61,7 +61,7 @@ export default function App() {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: palette.background,
+    backgroundColor: theme.palette.background,
     alignItems: 'center',
     justifyContent: 'center',
   },

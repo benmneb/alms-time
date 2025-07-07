@@ -1,16 +1,19 @@
 import { Platform, Switch as RNSwitch, SwitchProps } from 'react-native'
-import { palette } from '../theme/palette'
+import { theme } from '../theme'
 
 export function Switch(props: SwitchProps) {
   return (
     <RNSwitch
       trackColor={{
-        false: palette.neutral.mid,
-        true: Platform.OS === 'web' ? palette.neutral.mid : palette.blue,
+        false: theme.palette.neutral.mid,
+        true:
+          Platform.OS === 'web'
+            ? theme.palette.neutral.mid
+            : theme.palette.blue,
       }}
       // thumbColor={!!props.value ? Palette.blue : Palette.text.mid}
       // @ts-expect-error: Prop needed for web...
-      activeThumbColor={palette.blue}
+      activeThumbColor={theme.palette.blue}
       {...props}
     />
   )

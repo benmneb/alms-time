@@ -1,5 +1,5 @@
 import Svg, { SvgProps, Circle, Path } from 'react-native-svg'
-import { palette } from '../../theme/palette'
+import { theme } from '../../theme'
 
 export function HelpIcon({ ...props }: SvgProps) {
   return (
@@ -8,7 +8,7 @@ export function HelpIcon({ ...props }: SvgProps) {
       height={18}
       viewBox="0 0 24 24"
       fill="none"
-      stroke={palette.text.muted}
+      stroke={theme.palette.text.muted}
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={2}
