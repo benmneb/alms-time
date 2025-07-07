@@ -5,7 +5,7 @@ import {
   ViewStyle,
   PressableProps,
 } from 'react-native'
-import { usePressScale } from '../hooks/usePressScale'
+import { usePressScale } from '~/hooks/usePressScale'
 import Animated from 'react-native-reanimated'
 import { PropsWithChildren } from 'react'
 

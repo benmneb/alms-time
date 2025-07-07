@@ -2,9 +2,9 @@ import { useCallback, useEffect } from 'react'
 import { Platform } from 'react-native'
 import * as Location from 'expo-location'
 import SunCalc from 'suncalc'
-import { reverseWebGeocodeAsync } from '../helpers/reverseWebGeocodeAsync'
-import { useLocationStore } from '../store/location'
-import { useTimesStore } from '../store/times'
+import { reverseWebGeocodeAsync } from '~/helpers/reverseWebGeocodeAsync'
+import { useLocationStore } from '~/store/location'
+import { useTimesStore } from '~/store/times'
 
 export function useSunTimes() {
   const setLoading = useLocationStore((s) => s.setLoading)

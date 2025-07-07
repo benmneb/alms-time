@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
-import { getPersistentStorage } from '../helpers/getPersistentStorage'
+import { getPersistentStorage } from '~/helpers/getPersistentStorage'
 
 export interface SettingsType {
   dawnType: 'astro' | 'nautical' | 'civil'

@@ -4,7 +4,7 @@ import { Platform } from 'react-native'
 import {
   formatAddress,
   ReverseGeocodeReturnType,
-} from '../helpers/formatAddress'
+} from '~/helpers/formatAddress'
 
 export interface LocationType {
   loading: boolean | null

@@ -8,10 +8,10 @@ import {
 import Button from './Button'
 import IconButton from './IconButton'
 import { HelpIcon } from './icons/Help'
-import { useSettingsStore } from '../store/settings'
-import { useLocationStore } from '../store/location'
+import { useSettingsStore } from '~/store/settings'
+import { useLocationStore } from '~/store/location'
 import { Switch } from './Switch'
-import { theme } from '../theme'
+import { theme } from '~/theme'
 
 interface Props {
   ref: React.ForwardedRef<BottomSheetModal<any>> | undefined

@@ -1,6 +1,6 @@
-import { getSunCalcDawnKey } from '../helpers/getSunCalcDawnKey'
-import { useSettingsStore } from '../store/settings'
-import { useTimesStore } from '../store/times'
+import { getSunCalcDawnKey } from '~/helpers/getSunCalcDawnKey'
+import { useSettingsStore } from '~/store/settings'
+import { useTimesStore } from '~/store/times'
 
 /**
  * Determines which times to show based on the `onlyShowNextTime` state setting.

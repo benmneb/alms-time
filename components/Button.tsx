@@ -6,9 +6,9 @@ import {
   ViewStyle,
   PressableProps,
 } from 'react-native'
-import { usePressScale } from '../hooks/usePressScale'
+import { usePressScale } from '~/hooks/usePressScale'
 import Animated from 'react-native-reanimated'
-import { theme } from '../theme'
+import { theme } from '~/theme'
 
 interface Props extends PressableProps {
   title: string

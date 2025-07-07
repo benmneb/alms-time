@@ -1,5 +1,5 @@
 import { GetTimesResult } from 'suncalc'
-import { SettingsType } from '../store/settings'
+import { SettingsType } from '~/store/settings'
 
 /**
  * Mapping from user-friendly dawn type settings to corresponding SunCalc time property names.

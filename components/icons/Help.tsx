@@ -1,5 +1,5 @@
 import Svg, { SvgProps, Circle, Path } from 'react-native-svg'
-import { theme } from '../../theme'
+import { theme } from '~/theme'
 
 export function HelpIcon({ ...props }: SvgProps) {
   return (

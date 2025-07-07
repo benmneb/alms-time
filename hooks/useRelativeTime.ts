@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { formatRelativeTime } from '../helpers/formatRelativeTime'
+import { formatRelativeTime } from '~/helpers/formatRelativeTime'
 
 /**
  * Returns a relative time string for a given date, and keeps it updated.

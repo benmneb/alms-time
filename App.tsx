@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar'
 import { StyleSheet } from 'react-native'
-import Times from './components/Times'
+import Times from '~/components/Times'
 import {
   SafeAreaProvider,
   SafeAreaView,
@@ -12,10 +12,10 @@ import {
   BottomSheetModalProvider,
 } from '@gorhom/bottom-sheet'
 import { useCallback, useRef } from 'react'
-import SettingsSheet from './components/SettingsSheet'
-import IconButton from './components/IconButton'
-import { SettingsIcon } from './components/icons/Settings'
-import { theme } from './theme'
+import SettingsSheet from '~/components/SettingsSheet'
+import IconButton from '~/components/IconButton'
+import { SettingsIcon } from '~/components/icons/Settings'
+import { theme } from '~/theme'
 
 function Content() {
   const insets = useSafeAreaInsets()
