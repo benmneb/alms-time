@@ -8,9 +8,10 @@ import {
 import Button from './Button'
 import IconButton from './IconButton'
 import { HelpIcon } from './icons/Help'
-import { Switch } from 'react-native-gesture-handler'
 import { useSettingsStore } from '../store/settings'
 import { useLocationStore } from '../store/location'
+import { Switch } from './Switch'
+import { palette } from '../theme/palette'
 
 interface Props {
   ref: React.ForwardedRef<BottomSheetModal<any>> | undefined
@@ -33,7 +34,7 @@ export default function SettingsSheet({ ref }: Props) {
     <BottomSheetModal
       ref={ref}
       enableDynamicSizing
-      // snapPoints={['50%', '100%']}
+      snapPoints={['25%']}
       backdropComponent={(props) => (
         <BottomSheetBackdrop
           {...props}
@@ -43,15 +44,13 @@ export default function SettingsSheet({ ref }: Props) {
           style={{ cursor: 'pointer' }}
         />
       )}
+      backgroundStyle={{ backgroundColor: palette.background }}
     >
       <BottomSheetView style={styles.contentContainer}>
         <SafeAreaView edges={['bottom']}>
           <View style={styles.headingContainer}>
             <Text style={styles.heading}>Dawn time</Text>
-            <IconButton
-              style={styles.iconButton}
-              icon={<HelpIcon stroke="#999" />}
-            />
+            <IconButton style={styles.iconButton} icon={<HelpIcon />} />
           </View>
           <View style={styles.buttonContainer}>
             <Button
@@ -75,10 +74,7 @@ export default function SettingsSheet({ ref }: Props) {
           </View>
           <View style={[styles.headingContainer, { marginTop: 20 }]}>
             <Text style={styles.heading}>Time format</Text>
-            <IconButton
-              style={styles.iconButton}
-              icon={<HelpIcon stroke="#999" />}
-            />
+            <IconButton style={styles.iconButton} icon={<HelpIcon />} />
           </View>
           <View style={styles.buttonContainer}>
             <Button
@@ -95,10 +91,15 @@ export default function SettingsSheet({ ref }: Props) {
             />
           </View>
           <View style={[styles.headingContainer, { marginTop: 20 }]}>
-            <Text style={styles.heading}>Location format</Text>
+            <Text
+              style={[styles.heading, !showLocation && styles.textDisabled]}
+            >
+              Location format
+            </Text>
             <IconButton
-              style={styles.iconButton}
-              icon={<HelpIcon stroke="#999" />}
+              style={[styles.iconButton, !showLocation && styles.textDisabled]}
+              disabled={!showLocation}
+              icon={<HelpIcon />}
             />
           </View>
           <View style={styles.buttonContainer}>
@@ -120,20 +121,14 @@ export default function SettingsSheet({ ref }: Props) {
           <View style={[styles.switchContainer, { marginTop: 20 }]}>
             <View style={styles.switchHeadingContainer}>
               <Text style={styles.heading}>Show location</Text>
-              <IconButton
-                style={styles.iconButton}
-                icon={<HelpIcon stroke="#999" />}
-              />
+              <IconButton style={styles.iconButton} icon={<HelpIcon />} />
             </View>
             <Switch value={showLocation} onValueChange={setShowLocation} />
           </View>
           <View style={[styles.switchContainer]}>
             <View style={styles.switchHeadingContainer}>
               <Text style={styles.heading}>Only show next time</Text>
-              <IconButton
-                style={styles.iconButton}
-                icon={<HelpIcon stroke="#999" />}
-              />
+              <IconButton style={styles.iconButton} icon={<HelpIcon />} />
             </View>
             <Switch
               value={onlyShowNextTime}
@@ -173,6 +168,10 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  textDisabled: {
+    color: palette.text.muted,
+    opacity: 0.3,
   },
   iconButton: {},
   buttonContainer: {
