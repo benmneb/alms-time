@@ -3,10 +3,10 @@
   "short_name": "AlmsTime",
   "description": "Dawn Rise & Solar Noon for the Modern Monastic Lifestyle",
   "display": "standalone",
-  "orientation": "portrait",
+  "orientation": "any",
   "scope": "./",
   "start_url": "./?source=pwa",
-  "background_color": "#faf6e8",
+  "background_color": "#fcf6e8",
   "theme_color": "#b44915",
   "categories": ["lifestyle", "utilities", "travel", "weather"],
   "icons": [
