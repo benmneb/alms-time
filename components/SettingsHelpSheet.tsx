@@ -45,7 +45,7 @@ export default function SettingsHelpSheet({
             <>
               <Text style={styles.title}>About dawn times</Text>
               <Text style={styles.section}>
-                Dawn isn’t just one moment — it unfolds gradually in phases,
+                Dawn isn’t a single moment — it gradually unfolds in phases,
                 depending on how far the sun is below the horizon.
               </Text>
               <View style={styles.section}>
@@ -68,8 +68,8 @@ export default function SettingsHelpSheet({
                   • Horizon becomes faintly visible while at sea
                 </Text>
                 <Text style={styles.bullet}>
-                  • The sky starts to lighten, but it’s not yet bright enough to
-                  read without artificial light
+                  • The sky begins to lighten, but it’s not yet bright enough to
+                  see clearly without artificial light
                 </Text>
               </View>
               <View style={styles.section}>
@@ -90,13 +90,14 @@ export default function SettingsHelpSheet({
               <View style={styles.section}>
                 <Text style={styles.heading}>Absolute time</Text>
                 <Text style={styles.bullet}>
-                  • The time format of your local time zone
+                  • Shows clock time based on your current time zone
                 </Text>
               </View>
               <View style={styles.section}>
                 <Text style={styles.heading}>Relative time</Text>
                 <Text style={styles.bullet}>
-                  • Seconds / minutes / hours to or from the relevant event
+                  • Shows time as a countdown or count-up to/from each event
+                  (e.g., “in 23 minutes” or “2 hours ago”)
                 </Text>
               </View>
             </>
@@ -105,31 +106,27 @@ export default function SettingsHelpSheet({
             <>
               <Text style={styles.title}>About location formats</Text>
               <Text style={styles.section}>
-                Your location is gathered from your device geolocation API
-                without the need for an internet connection. No matter how it's
-                displayed, the accuracy is the same.
+                Your location is detected directly from your device’s GPS, even
+                without internet. The accuracy is the same no matter how it’s
+                displayed.
               </Text>
               <View style={styles.section}>
                 <Text style={styles.heading}>Address</Text>
                 <Text style={styles.bullet}>
-                  • The human-readable address inferred from your devices
-                  geolocation API
+                  • A human-readable address (like a street or city name)
                 </Text>
                 <Text style={styles.bullet}>
-                  • Displayed by default if you have an internet connection
+                  • Shown by default if an internet connection is available
                 </Text>
-                <Text style={styles.bullet}>
-                  • Unable to be displayed without an internet connection
-                </Text>
+                <Text style={styles.bullet}>• Not available offline</Text>
               </View>
               <View style={styles.section}>
                 <Text style={styles.heading}>Coordinates</Text>
                 <Text style={styles.bullet}>
-                  • The raw coordinates from your device (in decimal degrees /
-                  latitude and longitude)
+                  • Raw GPS coordinates (latitude and longitude)
                 </Text>
                 <Text style={styles.bullet}>
-                  • Displayed by default without an internet connection
+                  • Shown by default when you’re offline
                 </Text>
               </View>
             </>
@@ -139,12 +136,12 @@ export default function SettingsHelpSheet({
               {' '}
               <Text style={styles.title}>About hiding location</Text>
               <Text style={styles.section}>
-                For a more minimal layout, you can choose to hide your location
-                from view.
+                You can hide your location for a simpler, more focused layout.
               </Text>
               <View style={styles.section}>
                 <Text style={styles.bullet}>
-                  • This only modifies how it's shown
+                  • This only affects how the location is displayed — not how it
+                  works in the background
                 </Text>
               </View>
             </>
@@ -153,14 +150,15 @@ export default function SettingsHelpSheet({
             <>
               <Text style={styles.title}>Only show next time</Text>
               <Text style={styles.section}>
-                Shows only one time, the next approaching time.
+                Shows just the next upcoming time.
               </Text>
               <View style={styles.section}>
                 <Text style={styles.bullet}>
-                  • If it's after noon, it will show tomorrows dawn time
+                  • After midday, this means tomorrow’s dawn will be shown
                 </Text>
                 <Text style={styles.bullet}>
-                  • Works well with "relative time" enabled and location hidden
+                  • Works well with relative time enabled and location hidden
+                  for a minimal view
                 </Text>
               </View>
             </>
