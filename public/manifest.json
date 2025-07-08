@@ -6,7 +6,7 @@
   "orientation": "portrait",
   "scope": "./",
   "start_url": "./?source=pwa",
-  "background_color": "#faf6e8",
+  "background_color": "#fcf6e8",
   "theme_color": "#b44915",
   "categories": ["lifestyle", "utilities", "travel", "weather"],
   "icons": [

@@ -1,6 +1,6 @@
 export const palette = {
   blue: '#3777FF', // blue crayola
-  background: '#FAF6E8', // cosmic latte
+  background: '#FCF6E8', // cosmic latte
   text: {
     muted: '#B6B6B8',
     primary: '#2C2C2E',
