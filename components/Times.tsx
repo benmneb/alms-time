@@ -98,8 +98,10 @@ const styles = StyleSheet.create({
     maxWidth: theme.breakpoints.sm,
   },
   label: {
-    fontSize: 28,
+    fontSize: 20,
     color: theme.palette.text.muted,
+    textTransform: 'uppercase',
+    fontWeight: 'bold',
   },
   dawnRise: {
     marginBottom: 8,
