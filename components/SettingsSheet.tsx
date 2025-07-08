@@ -2,8 +2,8 @@ import { Text, StyleSheet, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import {
   BottomSheetModal,
-  BottomSheetView,
   BottomSheetBackdrop,
+  BottomSheetScrollView,
 } from '@gorhom/bottom-sheet'
 import Button from './Button'
 import IconButton from './IconButton'
@@ -59,7 +59,7 @@ export default function SettingsSheet({ ref }: Props) {
       )}
       backgroundStyle={{ backgroundColor: theme.palette.background }}
     >
-      <BottomSheetView style={styles.contentContainer}>
+      <BottomSheetScrollView contentContainerStyle={styles.contentContainer}>
         <SafeAreaView edges={['bottom']}>
           <Text style={styles.title}>Settings</Text>
           <View style={styles.headingContainer}>
@@ -168,7 +168,7 @@ export default function SettingsSheet({ ref }: Props) {
           </View>
         </SafeAreaView>
         <SettingsHelpSheet ref={helpSheetRef} content={helpContents} />
-      </BottomSheetView>
+      </BottomSheetScrollView>
     </BottomSheetModal>
   )
 }
