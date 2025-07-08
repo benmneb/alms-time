@@ -9,11 +9,7 @@ export default function NoLocation({ refetch }: Props) {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Could not calculate times</Text>
-      <Button
-        title="Try again"
-        onPress={() => refetch()}
-        style={styles.button}
-      />
+      <Button title="Try again" onPress={refetch} style={styles.button} />
     </View>
   )
 }
