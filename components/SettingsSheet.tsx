@@ -12,6 +12,8 @@ import { useSettingsStore } from '~/store/settings'
 import { useLocationStore } from '~/store/location'
 import { Switch } from './Switch'
 import { theme } from '~/theme'
+import { useCallback, useRef, useState } from 'react'
+import SettingsHelpSheet, { SettingsHelpSheetProps } from './SettingsHelpSheet'
 
 interface Props {
   ref: React.ForwardedRef<BottomSheetModal<any>> | undefined
@@ -30,11 +32,22 @@ export default function SettingsSheet({ ref }: Props) {
   const onlyShowNextTime = useSettingsStore((s) => s.onlyShowNextTime)
   const setOnlyShowNextTime = useSettingsStore((s) => s.setOnlyShowNextTime)
 
+  const [helpContents, setHelpContents] =
+    useState<SettingsHelpSheetProps['content']>('dawnTimes')
+  const helpSheetRef = useRef<BottomSheetModal>(null)
+  const handleHelpPress = useCallback(
+    (content: SettingsHelpSheetProps['content']) => {
+      setHelpContents(content)
+      helpSheetRef.current?.present()
+    },
+    []
+  )
+
   return (
     <BottomSheetModal
       ref={ref}
       enableDynamicSizing
-      snapPoints={['25%']}
+      snapPoints={['30%']}
       backdropComponent={(props) => (
         <BottomSheetBackdrop
           {...props}
@@ -48,9 +61,14 @@ export default function SettingsSheet({ ref }: Props) {
     >
       <BottomSheetView style={styles.contentContainer}>
         <SafeAreaView edges={['bottom']}>
+          <Text style={styles.title}>Settings</Text>
           <View style={styles.headingContainer}>
             <Text style={styles.heading}>Dawn time</Text>
-            <IconButton style={styles.iconButton} icon={<HelpIcon />} />
+            <IconButton
+              style={styles.iconButton}
+              icon={<HelpIcon />}
+              onPress={() => handleHelpPress('dawnTimes')}
+            />
           </View>
           <View style={styles.buttonContainer}>
             <Button
@@ -74,7 +92,11 @@ export default function SettingsSheet({ ref }: Props) {
           </View>
           <View style={[styles.headingContainer, { marginTop: 20 }]}>
             <Text style={styles.heading}>Time format</Text>
-            <IconButton style={styles.iconButton} icon={<HelpIcon />} />
+            <IconButton
+              style={styles.iconButton}
+              icon={<HelpIcon />}
+              onPress={() => handleHelpPress('timeFormat')}
+            />
           </View>
           <View style={styles.buttonContainer}>
             <Button
@@ -100,6 +122,7 @@ export default function SettingsSheet({ ref }: Props) {
               style={[styles.iconButton, !showLocation && styles.textDisabled]}
               disabled={!showLocation}
               icon={<HelpIcon />}
+              onPress={() => handleHelpPress('locationFormat')}
             />
           </View>
           <View style={styles.buttonContainer}>
@@ -121,14 +144,22 @@ export default function SettingsSheet({ ref }: Props) {
           <View style={[styles.switchContainer, { marginTop: 20 }]}>
             <View style={styles.switchHeadingContainer}>
               <Text style={styles.heading}>Show location</Text>
-              <IconButton style={styles.iconButton} icon={<HelpIcon />} />
+              <IconButton
+                style={styles.iconButton}
+                icon={<HelpIcon />}
+                onPress={() => handleHelpPress('showLocation')}
+              />
             </View>
             <Switch value={showLocation} onValueChange={setShowLocation} />
           </View>
           <View style={[styles.switchContainer]}>
             <View style={styles.switchHeadingContainer}>
               <Text style={styles.heading}>Only show next time</Text>
-              <IconButton style={styles.iconButton} icon={<HelpIcon />} />
+              <IconButton
+                style={styles.iconButton}
+                icon={<HelpIcon />}
+                onPress={() => handleHelpPress('onlyShowNextTime')}
+              />
             </View>
             <Switch
               value={onlyShowNextTime}
@@ -136,6 +167,7 @@ export default function SettingsSheet({ ref }: Props) {
             />
           </View>
         </SafeAreaView>
+        <SettingsHelpSheet ref={helpSheetRef} content={helpContents} />
       </BottomSheetView>
     </BottomSheetModal>
   )
@@ -147,6 +179,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
     paddingTop: 12,
+  },
+  title: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+    color: theme.palette.text.muted,
+    marginBottom: 12,
+    textAlign: 'center',
   },
   headingContainer: {
     flexDirection: 'row',
