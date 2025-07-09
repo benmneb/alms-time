@@ -132,7 +132,7 @@ export function useSunTimes() {
   useEffect(() => {
     if (loading) return
     calculateSunTimes(coords)
-  }, [timeOffset, isUsingTimeOffset])
+  }, [timeOffset, isUsingTimeOffset]) // TODO: FIXME: iOS bug
 
   return {
     refetch: fetchLocationAndSunTimes,

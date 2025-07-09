@@ -11,14 +11,14 @@ import { useTimesStore } from '~/store/times'
 export default function SettingsFAB() {
   const insets = useSafeAreaInsets()
   const loading = useLocationStore((s) => s.loading)
-  const location = useLocationStore((s) => s.coords)
+  const coords = useLocationStore((s) => s.coords)
   const sunTimes = useTimesStore((s) => s.sunTimes)
   const settingsSheetRef = useRef<BottomSheetModal>(null)
   const handleSettingsPress = useCallback(() => {
     settingsSheetRef.current?.present()
   }, [])
 
-  if (loading || !location || !sunTimes) return null
+  if (loading || !coords || !sunTimes) return null
 
   return (
     <>

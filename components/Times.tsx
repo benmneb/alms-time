@@ -14,7 +14,7 @@ import { theme } from '~/theme'
 export default function Times() {
   const { refetch } = useSunTimes()
   const loading = useLocationStore((s) => s.loading)
-  const location = useLocationStore((s) => s.coords)
+  const coords = useLocationStore((s) => s.coords)
   const formattedAddress = useLocationStore((s) => s.formattedAddress)
   const todaysTimes = useTimesStore((s) => s.sunTimes)
   const tomorrowsTimes = useTimesStore((s) => s.tomorrowsTimes)
@@ -33,7 +33,7 @@ export default function Times() {
 
   if (loading) return <ActivityIndicator size="large" style={styles.loading} />
 
-  if (!location) return <NoLocation refetch={refetch} />
+  if (!coords) return <NoLocation refetch={refetch} />
   if (!sunTimes) return <NoSunTimes refetch={refetch} />
 
   return (
@@ -91,7 +91,7 @@ export default function Times() {
           >
             {formattedAddress && locationFormat === 'address'
               ? formattedAddress
-              : `${location.latitude}, ${location.longitude}`}
+              : `${coords.latitude}, ${coords.longitude}`}
           </Text>
         </Text>
       )}
