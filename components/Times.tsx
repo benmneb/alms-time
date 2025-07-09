@@ -28,6 +28,8 @@ export default function Times() {
   const sunTimes = showTomorrowDawn ? tomorrowsTimes : todaysTimes
   const dawnRelative = useRelativeTime(sunTimes?.[getSunCalcDawnKey(dawnType)])
   const noonRelative = useRelativeTime(sunTimes?.solarNoon)
+  const isUsingTimeOffset = useSettingsStore((s) => s.isUsingTimeOffset)
+  const timeOffset = useSettingsStore((s) => s.timeOffset)
 
   if (loading) return <ActivityIndicator size="large" style={styles.loading} />
 
@@ -38,7 +40,12 @@ export default function Times() {
     <View style={styles.container}>
       {(showDawn || showTomorrowDawn) && (
         <>
-          <Text style={styles.label}>Dawn</Text>
+          <View style={styles.labelContainer}>
+            <Text style={styles.label}>Dawn</Text>
+            {isUsingTimeOffset && (
+              <Text style={styles.offsetIndicator}>+{timeOffset}m</Text>
+            )}
+          </View>
           <Text
             style={styles.dawnRise}
             onPress={() =>
@@ -53,7 +60,12 @@ export default function Times() {
       )}
       {showNoon && (
         <>
-          <Text style={styles.label}>Solar Noon</Text>
+          <View style={styles.labelContainer}>
+            <Text style={styles.label}>Solar Noon</Text>
+            {isUsingTimeOffset && (
+              <Text style={styles.offsetIndicator}>-{timeOffset}m</Text>
+            )}
+          </View>
           <Text
             style={styles.solarNoon}
             onPress={() =>
@@ -97,11 +109,22 @@ const styles = StyleSheet.create({
     width: '100%',
     maxWidth: theme.breakpoints.sm,
   },
+  labelContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   label: {
     fontSize: 20,
     color: theme.palette.text.muted,
     textTransform: 'uppercase',
     fontWeight: 'bold',
+  },
+  offsetIndicator: {
+    marginLeft: 4,
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: theme.palette.neutral.mid,
+    opacity: 0.7,
   },
   dawnRise: {
     marginBottom: 8,

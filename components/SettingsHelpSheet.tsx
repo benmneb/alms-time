@@ -14,6 +14,7 @@ export interface SettingsHelpSheetProps {
     | 'timeFormat'
     | 'locationFormat'
     | 'showLocation'
+    | 'timeOffset'
     | 'onlyShowNextTime'
 }
 
@@ -133,7 +134,6 @@ export default function SettingsHelpSheet({
           )}
           {content === 'showLocation' && (
             <>
-              {' '}
               <Text style={styles.title}>About hiding location</Text>
               <Text style={styles.section}>
                 You can hide your location for a simpler, more focused layout.
@@ -148,7 +148,7 @@ export default function SettingsHelpSheet({
           )}
           {content === 'onlyShowNextTime' && (
             <>
-              <Text style={styles.title}>Only show next time</Text>
+              <Text style={styles.title}>About only show next time</Text>
               <Text style={styles.section}>
                 Shows just the next upcoming time.
               </Text>
@@ -159,6 +159,29 @@ export default function SettingsHelpSheet({
                 <Text style={styles.bullet}>
                   • Works well with relative time enabled and location hidden
                   for a minimal view
+                </Text>
+              </View>
+            </>
+          )}
+          {content === 'timeOffset' && (
+            <>
+              <Text style={styles.title}>About time offset</Text>
+              <Text style={styles.section}>
+                Adds a buffer to the selected times for safety or personal
+                preference.
+              </Text>
+              <View style={styles.section}>
+                <Text style={styles.heading}>Dawn</Text>
+                <Text style={styles.bullet}>
+                  • The offset is added to the actual time (making the displayed
+                  time later)
+                </Text>
+              </View>
+              <View style={styles.section}>
+                <Text style={styles.heading}>Noon</Text>
+                <Text style={styles.bullet}>
+                  • The offset is subtracted from the actual time (making the
+                  displayed time earlier)
                 </Text>
               </View>
             </>
@@ -177,7 +200,7 @@ const styles = StyleSheet.create({
     paddingTop: 12,
   },
   content: {
-    maxWidth: theme.breakpoints.sm,
+    maxWidth: theme.breakpoints.xs,
     alignSelf: 'center',
   },
   title: {

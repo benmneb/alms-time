@@ -1,3 +1,4 @@
+import { useCallback, useRef, useState } from 'react'
 import { Text, StyleSheet, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import {
@@ -12,7 +13,6 @@ import { useSettingsStore } from '~/store/settings'
 import { useLocationStore } from '~/store/location'
 import { Switch } from './Switch'
 import { theme } from '~/theme'
-import { useCallback, useRef, useState } from 'react'
 import SettingsHelpSheet, { SettingsHelpSheetProps } from './SettingsHelpSheet'
 
 interface Props {
@@ -31,6 +31,10 @@ export default function SettingsSheet({ ref }: Props) {
   const setShowLocation = useSettingsStore((s) => s.setShowLocation)
   const onlyShowNextTime = useSettingsStore((s) => s.onlyShowNextTime)
   const setOnlyShowNextTime = useSettingsStore((s) => s.setOnlyShowNextTime)
+  const timeOffset = useSettingsStore((s) => s.timeOffset)
+  const setTimeOffset = useSettingsStore((s) => s.setTimeOffset)
+  const isUsingTimeOffset = useSettingsStore((s) => s.isUsingTimeOffset)
+  const setIsUsingTimeOffset = useSettingsStore((s) => s.setIsUsingTimeOffset)
 
   const [helpContents, setHelpContents] =
     useState<SettingsHelpSheetProps['content']>('dawnTimes')
@@ -60,7 +64,7 @@ export default function SettingsSheet({ ref }: Props) {
       backgroundStyle={{ backgroundColor: theme.palette.background }}
     >
       <BottomSheetScrollView contentContainerStyle={styles.contentContainer}>
-        <SafeAreaView edges={['bottom']}>
+        <SafeAreaView edges={['bottom']} style={styles.content}>
           <Text style={styles.title}>Settings</Text>
           <View style={styles.headingContainer}>
             <Text style={styles.heading}>Dawn time</Text>
@@ -152,7 +156,7 @@ export default function SettingsSheet({ ref }: Props) {
             </View>
             <Switch value={showLocation} onValueChange={setShowLocation} />
           </View>
-          <View style={[styles.switchContainer]}>
+          <View style={styles.switchContainer}>
             <View style={styles.switchHeadingContainer}>
               <Text style={styles.heading}>Only show next time</Text>
               <IconButton
@@ -165,6 +169,32 @@ export default function SettingsSheet({ ref }: Props) {
               value={onlyShowNextTime}
               onValueChange={setOnlyShowNextTime}
             />
+          </View>
+          <View style={styles.switchContainer}>
+            <View style={styles.switchHeadingContainer}>
+              <Text style={styles.heading}>Time offset</Text>
+              <IconButton
+                style={styles.iconButton}
+                icon={<HelpIcon />}
+                onPress={() => handleHelpPress('timeOffset')}
+              />
+            </View>
+            <Switch
+              value={isUsingTimeOffset}
+              onValueChange={setIsUsingTimeOffset}
+            />
+          </View>
+          <View style={styles.buttonContainer}>
+            {[1, 2, 3, 5, 10, 15].map((offsetMins) => (
+              <Button
+                key={offsetMins}
+                style={styles.button}
+                title={`${offsetMins} ${offsetMins > 1 ? 'mins' : 'min'}`}
+                variant={timeOffset === offsetMins ? 'solid' : 'outline'}
+                onPress={() => setTimeOffset(offsetMins)}
+                disabled={!isUsingTimeOffset}
+              />
+            ))}
           </View>
         </SafeAreaView>
         <SettingsHelpSheet ref={helpSheetRef} content={helpContents} />
@@ -179,6 +209,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
     paddingTop: 12,
+  },
+  content: {
+    maxWidth: theme.breakpoints.xs,
+    alignSelf: 'center',
   },
   title: {
     fontSize: 14,

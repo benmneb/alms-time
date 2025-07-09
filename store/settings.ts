@@ -5,6 +5,10 @@ import { getPersistentStorage } from '~/helpers/getPersistentStorage'
 export interface SettingsType {
   dawnType: 'astro' | 'nautical' | 'civil'
   setDawnType: (dawnType: SettingsType['dawnType']) => void
+  timeOffset: number
+  setTimeOffset: (timeOffset: number) => void
+  isUsingTimeOffset: boolean
+  setIsUsingTimeOffset: (isUsingTimeOffset: boolean) => void
   timeFormat: 'absolute' | 'relative'
   setTimeFormat: (timeFormat: SettingsType['timeFormat']) => void
   locationFormat: 'address' | 'coords'
@@ -20,6 +24,10 @@ export const useSettingsStore = create<SettingsType>()(
     (set, get) => ({
       dawnType: 'nautical',
       setDawnType: (dawnType) => set({ dawnType }),
+      timeOffset: 3,
+      setTimeOffset: (timeOffset) => set({ timeOffset }),
+      isUsingTimeOffset: false,
+      setIsUsingTimeOffset: (isUsingTimeOffset) => set({ isUsingTimeOffset }),
       timeFormat: 'absolute',
       setTimeFormat: (timeFormat) => set({ timeFormat }),
       locationFormat: 'address',
